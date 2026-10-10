@@ -52,7 +52,7 @@
                 <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Sistem Keuangan, Simpan Pinjam, SHU, ZIS & Gamifikasi v25.0 Pro</p>
             </div>
 
-            <form onsubmit="window.handleLogin(event)" class="space-y-4">
+            <form id="loginForm" class="space-y-4">
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Nomor HP / WhatsApp</label>
                     <input type="text" id="loginKontak" required placeholder="08..." class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm rounded-xl p-3.5 outline-none focus:ring-2 focus:ring-emerald-500 font-medium">
@@ -62,7 +62,7 @@
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">PIN Keamanan</label>
                     <input type="password" id="loginPin" required placeholder="••••" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-center text-xl tracking-widest rounded-xl p-3 outline-none focus:ring-2 focus:ring-emerald-500 font-bold">
                     <div class="flex justify-end items-center mt-1">
-                        <button type="button" onclick="window.bukaModalLupaPin()" class="text-[11px] text-emerald-600 dark:text-emerald-400 hover:underline font-semibold">Lupa PIN?</button>
+                        <button type="button" id="bukaModalLupaPinBtn" class="text-[11px] text-emerald-600 dark:text-emerald-400 hover:underline font-semibold">Lupa PIN?</button>
                     </div>
                 </div>
 
@@ -78,7 +78,7 @@
 
     <header class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-40 px-4 lg:px-8 h-16 flex items-center justify-between shadow-sm">
         <div class="flex items-center gap-3">
-            <button onclick="window.toggleSidebar()" class="lg:hidden p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition">
+            <button id="toggleSidebarBtn" class="lg:hidden p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
             </button>
             <div class="flex items-center gap-2">
@@ -87,20 +87,20 @@
                 </div>
                 <div>
                     <h1 class="font-bold text-slate-800 dark:text-white text-base leading-tight">Koperasi Keluarga</h1>
-                    <p class="text-xs text-slate-500 dark:text-slate-400">Simpan Pinjam, ZIS & Gamifikasi Pro</p>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Simpan Pinjam, ZIS & Gamifikasi Pro (Firebase Cloud Sync)</p>
                 </div>
             </div>
         </div>
 
         <div class="flex items-center gap-3 relative">
-            <button onclick="window.toggleDarkMode()" class="p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition" title="Ganti Mode Terang/Gelap">
+            <button id="toggleDarkModeBtn" class="p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition" title="Ganti Mode Terang/Gelap">
                 <svg id="sunIcon" class="w-5 h-5 hidden dark:block text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                 <svg id="moonIcon" class="w-5 h-5 block dark:hidden text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
             </button>
 
             <div id="modeSwitcherContainer" class="bg-slate-100 dark:bg-slate-800 p-1 rounded-xl flex items-center gap-1 text-xs font-semibold">
-                <button onclick="window.switchMode('admin')" id="modeAdminBtn" class="px-3 py-1.5 rounded-lg transition bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm">Mode Pengurus</button>
-                <button onclick="window.switchMode('member')" id="modeMemberBtn" class="px-3 py-1.5 rounded-lg transition text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">Portal Anggota</button>
+                <button id="modeAdminBtn" class="px-3 py-1.5 rounded-lg transition bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm">Mode Pengurus</button>
+                <button id="modeMemberBtn" class="px-3 py-1.5 rounded-lg transition text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">Portal Anggota</button>
             </div>
 
             <div class="flex items-center gap-3 pl-3 border-l border-slate-200 dark:border-slate-800">
@@ -112,7 +112,7 @@
                     <p class="text-xs font-bold text-slate-700 dark:text-slate-200" id="headerUserName">Super Admin</p>
                     <p class="text-[10px] text-emerald-600 dark:text-emerald-400 font-medium" id="headerUserRole">Super Administrator</p>
                 </div>
-                <button onclick="window.handleLogout()" class="p-2 text-slate-400 hover:text-rose-600 rounded-xl transition" title="Keluar Akun">
+                <button id="logoutBtn" class="p-2 text-slate-400 hover:text-rose-600 rounded-xl transition" title="Keluar Akun">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
                 </button>
             </div>
@@ -120,7 +120,7 @@
     </header>
 
     <div class="flex-1 flex overflow-hidden relative">
-        <div id="sidebarOverlay" onclick="window.toggleSidebar()" class="fixed inset-0 bg-slate-900/50 z-30 hidden lg:hidden backdrop-blur-sm transition-opacity"></div>
+        <div id="sidebarOverlay" class="fixed inset-0 bg-slate-900/50 z-30 hidden lg:hidden backdrop-blur-sm transition-opacity"></div>
 
         <aside id="sidebar" class="fixed lg:static inset-y-0 left-0 w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 z-40 flex flex-col transform -translate-x-full lg:translate-x-0 transition-transform duration-200 ease-in-out shrink-0 pt-16 lg:pt-0">
             <div class="p-6 pt-6">
@@ -130,7 +130,7 @@
             <div class="mt-auto p-6 border-t border-slate-100 dark:border-slate-800">
                 <div class="bg-blue-50 dark:bg-slate-800/60 rounded-2xl p-4 border border-blue-100 dark:border-slate-700">
                     <p class="text-xs font-bold text-blue-900 dark:text-blue-300 mb-1">Koperasi Keluarga v25.0</p>
-                    <p class="text-[11px] text-blue-700 dark:text-blue-400">Firebase Cloud Sync, ZIS & WhatsApp Notif.</p>
+                    <p class="text-[11px] text-blue-700 dark:text-blue-400">Firebase Cloud Firestore Live Sync Active.</p>
                 </div>
             </div>
         </aside>
@@ -142,9 +142,9 @@
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800">
                     <div>
                         <h2 class="text-xl sm:text-2xl font-bold text-slate-800 dark:text-white">Dashboard Utama</h2>
-                        <p class="text-sm text-slate-500 dark:text-slate-400">Ringkasan keuangan keluarga dan arus kas koperasi secara real-time.</p>
+                        <p class="text-sm text-slate-500 dark:text-slate-400">Ringkasan keuangan keluarga dan arus kas koperasi secara real-time cloud.</p>
                     </div>
-                    <button onclick="window.bukaModalTransaksi()" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-5 py-2.5 rounded-xl shadow-md transition flex items-center justify-center gap-2">
+                    <button id="openTrxModalDashboard" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-5 py-2.5 rounded-xl shadow-md transition flex items-center justify-center gap-2">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
                         Catat Transaksi Baru
                     </button>
@@ -163,7 +163,7 @@
                             <p id="teksPengumuman" class="text-xl sm:text-2xl font-black leading-relaxed text-amber-200 tracking-wide">Harap seluruh anggota keluarga melunasi simpanan wajib sebelum tanggal 10 setiap bulannya. Terima kasih!</p>
                         </div>
                     </div>
-                    <button onclick="window.bukaModalEditPengumuman()" id="btnEditPengumuman" class="bg-amber-400 hover:bg-amber-500 text-slate-950 text-sm font-extrabold px-6 py-3.5 rounded-2xl transition shadow-xl shrink-0 flex items-center gap-2 relative z-10 border border-amber-300">
+                    <button id="bukaModalEditPengumumanBtn" class="bg-amber-400 hover:bg-amber-500 text-slate-950 text-sm font-extrabold px-6 py-3.5 rounded-2xl transition shadow-xl shrink-0 flex items-center gap-2 relative z-10 border border-amber-300">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
                         Edit Pengumuman
                     </button>
@@ -215,10 +215,6 @@
                     <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 p-5 w-full">
                         <div class="flex justify-between items-center mb-4">
                             <h3 class="text-lg font-bold text-slate-800 dark:text-white">Grafik Arus Kas</h3>
-                            <select id="filterGrafikWaktu" onchange="window.renderGrafikArusKas()" class="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm font-medium rounded-lg p-2 outline-none">
-                                <option value="6months" selected>6 Bulan Terakhir</option>
-                                <option value="1year">1 Tahun Terakhir</option>
-                            </select>
                         </div>
                         <div class="relative h-72 w-full"><canvas id="cashflowChart"></canvas></div>
                     </div>
@@ -234,7 +230,7 @@
                 <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 p-6">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-lg font-bold text-slate-800 dark:text-white">Aktivitas Terakhir</h3>
-                        <button onclick="window.switchTab('simpanan')" class="text-xs text-emerald-600 dark:text-emerald-400 font-bold hover:underline">Lihat Semua Buku Simpanan &rarr;</button>
+                        <button id="gotoSimpananTabBtn" class="text-xs text-emerald-600 dark:text-emerald-400 font-bold hover:underline">Lihat Semua Buku Simpanan &rarr;</button>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse">
@@ -262,7 +258,7 @@
                         <p class="text-sm text-slate-500 dark:text-slate-400">Pilih centang atau setujui sekaligus setoran, penarikan, dan cicilan pinjaman anggota.</p>
                     </div>
                     <div class="flex items-center gap-3">
-                        <button onclick="window.approveAllSelected()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-2 rounded-xl text-xs shadow-sm transition">Setujui Terpilih (Bulk)</button>
+                        <button id="approveAllSelectedBtn" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-2 rounded-xl text-xs shadow-sm transition">Setujui Terpilih (Bulk)</button>
                         <span id="badgePendingCount" class="bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 font-bold text-xs px-3 py-1.5 rounded-full">0 Menunggu Konfirmasi</span>
                     </div>
                 </div>
@@ -272,7 +268,7 @@
                         <table class="w-full text-left border-collapse">
                             <thead>
                                 <tr class="bg-slate-50 dark:bg-slate-800 border-b border-slate-100 dark:border-slate-800 text-xs font-bold text-slate-500 uppercase tracking-wider">
-                                    <th class="py-4 px-4 text-center"><input type="checkbox" id="selectAllCheckbox" onchange="window.toggleSelectAll(this)" class="accent-emerald-600"></th>
+                                    <th class="py-4 px-4 text-center"><input type="checkbox" id="selectAllCheckbox" class="accent-emerald-600"></th>
                                     <th class="py-4 px-4">Waktu & Tanggal</th>
                                     <th class="py-4 px-4">Nama Anggota</th>
                                     <th class="py-4 px-4">Tipe & Kategori</th>
@@ -288,12 +284,12 @@
                 </div>
 
                 <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 p-6 space-y-4">
-                    <h3 class="text-lg font-bold text-slate-800 dark:text-white">Log Riwayat Persetujuan Transaksi (Tanggal & Jam)</h3>
+                    <h3 class="text-lg font-bold text-slate-800 dark:text-white">Log Riwayat Persetujuan Transaksi</h3>
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse">
                             <thead>
                                 <tr class="bg-slate-50 dark:bg-slate-800 border-b border-slate-100 dark:border-slate-800 text-xs font-bold text-slate-500 uppercase tracking-wider">
-                                    <th class="py-3 px-4">Waktu Aksi (Tanggal & Jam)</th>
+                                    <th class="py-3 px-4">Waktu Aksi</th>
                                     <th class="py-3 px-4">Anggota</th>
                                     <th class="py-3 px-4">Aktivitas</th>
                                     <th class="py-3 px-4">Nominal</th>
@@ -318,16 +314,16 @@
                         <p class="text-sm text-slate-500 dark:text-slate-400 mt-0.5">Kelola simpanan, iuran wajib bulanan, dan laporan pengeluaran operasional.</p>
                     </div>
                     <div class="flex flex-wrap items-center gap-3 w-full md:w-auto no-print">
-                        <button onclick="window.exportToExcel()" class="bg-teal-600 hover:bg-teal-700 text-white font-semibold px-4 py-3 rounded-2xl shadow-md transition flex items-center gap-2 text-xs shrink-0">
+                        <button id="exportExcelBtn" class="bg-teal-600 hover:bg-teal-700 text-white font-semibold px-4 py-3 rounded-2xl shadow-md transition flex items-center gap-2 text-xs shrink-0">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                             Export Excel (CSV)
                         </button>
-                        <button onclick="window.exportToPDF()" class="bg-rose-600 hover:bg-rose-700 text-white font-semibold px-4 py-3 rounded-2xl shadow-md transition flex items-center gap-2 text-xs shrink-0">
+                        <button id="exportPdfBtn" class="bg-rose-600 hover:bg-rose-700 text-white font-semibold px-4 py-3 rounded-2xl shadow-md transition flex items-center gap-2 text-xs shrink-0">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                             Export PDF / Print
                         </button>
-                        <button onclick="window.bukaModalTransaksi()" class="glowing-btn bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold px-6 py-3 rounded-2xl shadow-xl transition flex items-center gap-2 text-xs shrink-0 transform hover:scale-105">
-                            <svg class="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                        <button id="openTrxModalSimpananBtn" class="glowing-btn bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold px-6 py-3 rounded-2xl shadow-xl transition flex items-center gap-2 text-xs shrink-0">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
                             + Tambah Transaksi
                         </button>
                     </div>
@@ -344,7 +340,7 @@
                         </div>
                         <div class="flex items-center gap-3">
                             <input type="month" id="inputBulanTagihanWajib" class="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm font-medium rounded-xl px-4 py-2.5 outline-none">
-                            <button onclick="window.generateTagihanWajibBulanIni()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-2.5 rounded-xl text-xs shadow-sm transition">Generate Tagihan Wajib</button>
+                            <button id="generateTagihanBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-2.5 rounded-xl text-xs shadow-sm transition">Generate Tagihan Wajib</button>
                         </div>
                     </div>
 
@@ -356,7 +352,7 @@
                             </div>
                             <h4 id="labelTotalOperasional" class="text-base font-extrabold text-rose-600">Rp 0</h4>
                         </div>
-                        <button onclick="window.bukaModalOperasional()" class="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold px-4 py-2.5 rounded-xl text-xs transition">Catat Biaya Operasional Baru</button>
+                        <button id="openOpModalBtn" class="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold px-4 py-2.5 rounded-xl text-xs transition">Catat Biaya Operasional Baru</button>
                     </div>
                 </div>
 
@@ -415,20 +411,20 @@
                             <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                             </span>
-                            <input type="text" id="searchInput" oninput="window.renderTabelTransaksi()" placeholder="Cari nama atau keterangan..." class="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:ring-2 focus:ring-emerald-500 outline-none font-medium">
+                            <input type="text" id="searchInput" placeholder="Cari nama atau keterangan..." class="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:ring-2 focus:ring-emerald-500 outline-none font-medium">
                         </div>
                         <div class="w-full">
-                            <select id="filterTipe" onchange="window.renderTabelTransaksi()" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm font-medium rounded-xl px-4 py-2.5 outline-none">
+                            <select id="filterTipe" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm font-medium rounded-xl px-4 py-2.5 outline-none">
                                 <option value="all">Semua Tipe Transaksi</option>
                                 <option value="setor">Setoran (Masuk)</option>
                                 <option value="tarik">Pencairan / Penarikan (Keluar)</option>
                             </select>
                         </div>
                         <div class="w-full">
-                            <input type="month" id="filterBulan" onchange="window.renderTabelTransaksi()" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm font-medium rounded-xl px-4 py-2.5 outline-none">
+                            <input type="month" id="filterBulan" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm font-medium rounded-xl px-4 py-2.5 outline-none">
                         </div>
                         <div class="w-full">
-                            <select id="filterLimit" onchange="window.renderTabelTransaksi()" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm font-medium rounded-xl px-4 py-2.5 outline-none">
+                            <select id="filterLimit" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm font-medium rounded-xl px-4 py-2.5 outline-none">
                                 <option value="10" selected>Tampilkan 10 Data</option>
                                 <option value="50">Tampilkan 50 Data</option>
                                 <option value="100">Tampilkan 100 Data</option>
@@ -451,27 +447,22 @@
                             <span class="text-[10px] uppercase font-bold text-emerald-700 dark:text-emerald-400 block">Total Saldo Anda</span>
                             <strong id="pinjamanTabTotalSaldo" class="text-base font-extrabold text-emerald-800 dark:text-emerald-300">Rp 0</strong>
                         </div>
-                        <div id="adminPlafonControl" class="flex items-center gap-2 hidden">
-                            <label class="text-xs font-bold text-slate-500 uppercase">Plafon Max Global (Rp):</label>
-                            <input type="number" id="inputGlobalPlafon" value="15000000" step="500000" onchange="window.updatePlafonKoperasi()" class="w-36 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm font-bold rounded-xl px-3 py-2 outline-none">
-                        </div>
                     </div>
                 </div>
 
                 <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 p-6 space-y-4">
                     <div class="flex justify-between items-center">
                         <h3 class="text-lg font-bold text-slate-800 dark:text-white">Kalkulator Simulasi Cicilan Pinjaman</h3>
-                        <span id="badgeInfoPlafonPribadi" class="text-xs font-bold px-3 py-1 bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 rounded-xl">Plafon Anda: Rp 0</span>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <div>
                             <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Jumlah Pinjaman (Rp)</label>
-                            <input type="number" id="simNominal" value="1000000" step="100000" oninput="window.hitungSimulasiCicilan()" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm rounded-xl p-3 outline-none">
+                            <input type="number" id="simNominal" value="1000000" step="100000" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm rounded-xl p-3 outline-none">
                         </div>
                         <div>
                             <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Jangka Waktu (Bulan)</label>
-                            <select id="simBulan" onchange="window.hitungSimulasiCicilan()" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm rounded-xl p-3 outline-none">
+                            <select id="simBulan" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm rounded-xl p-3 outline-none">
                                 <option value="3">3 Bulan</option>
                                 <option value="6" selected>6 Bulan</option>
                                 <option value="12">12 Bulan</option>
@@ -480,7 +471,7 @@
                         </div>
                         <div>
                             <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Bunga Flat (% / Bulan)</label>
-                            <input type="number" id="simBunga" value="1" step="0.1" oninput="window.hitungSimulasiCicilan()" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm rounded-xl p-3 outline-none">
+                            <input type="number" id="simBunga" value="1" step="0.1" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm rounded-xl p-3 outline-none">
                         </div>
                     </div>
                     <div class="bg-emerald-50 dark:bg-emerald-950 border border-emerald-100 dark:border-emerald-900 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -488,13 +479,13 @@
                             <p class="text-xs text-emerald-800 dark:text-emerald-300 font-semibold">Estimasi Cicilan per Bulan:</p>
                             <h4 id="hasilSimCicilan" class="text-xl font-extrabold text-emerald-700 dark:text-emerald-400">Rp 0</h4>
                         </div>
-                        <button id="btnAjukanSimPinjaman" onclick="window.ajukanPinjamanDariSimulasi()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-5 py-2.5 rounded-xl text-xs shadow-md transition">Ajukan Pinjaman Ini</button>
+                        <button id="btnAjukanSimPinjaman" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-5 py-2.5 rounded-xl text-xs shadow-md transition">Ajukan Pinjaman Ini</button>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 p-6 space-y-4">
-                        <h3 class="text-lg font-bold text-slate-800 dark:text-white">Daftar Pinjaman Aktif & Pengaturan Pengurus</h3>
+                        <h3 class="text-lg font-bold text-slate-800 dark:text-white">Daftar Pinjaman Aktif</h3>
                         <div class="overflow-x-auto">
                             <table class="w-full text-left border-collapse">
                                 <thead>
@@ -502,7 +493,7 @@
                                         <th class="py-3 px-4">Anggota</th>
                                         <th class="py-3 px-4">Sisa Tagihan & Tenor</th>
                                         <th class="py-3 px-4 text-center">Jatuh Tempo</th>
-                                        <th class="py-3 px-4 text-center">Aksi Pengurus</th>
+                                        <th class="py-3 px-4 text-center">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tabelPinjamanAktifBody" class="divide-y divide-slate-100 dark:divide-slate-800 text-sm text-slate-700 dark:text-slate-300"></tbody>
@@ -536,7 +527,7 @@
                         <h2 class="text-xl sm:text-2xl font-bold text-slate-800 dark:text-white">Daftar Anggota Keluarga</h2>
                         <p class="text-sm text-slate-500 dark:text-slate-400">Daftar lengkap data kontak, email, tanggal bergabung, rekening, dan lencana keaktifan anggota.</p>
                     </div>
-                    <button onclick="window.bukaModalAnggota()" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-5 py-2.5 rounded-xl shadow-md transition flex items-center justify-center gap-2">
+                    <button id="openAnggotaModalBtn" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-5 py-2.5 rounded-xl shadow-md transition flex items-center justify-center gap-2">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path></svg>
                         Tambah Anggota Baru
                     </button>
@@ -547,7 +538,7 @@
                         <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                         </span>
-                        <input type="text" id="searchAnggotaInput" oninput="window.renderAnggota()" placeholder="Cari nama anggota, keluarga, atau peran..." class="w-full pl-9 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
+                        <input type="text" id="searchAnggotaInput" placeholder="Cari nama anggota, keluarga, atau peran..." class="w-full pl-9 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
                     </div>
                 </div>
 
@@ -564,15 +555,15 @@
                     <div id="adminShuControl" class="flex flex-wrap items-center gap-3 hidden">
                         <div class="flex items-center gap-2">
                             <label class="text-xs font-bold text-slate-500 uppercase">Jasa Modal (%)</label>
-                            <input type="number" id="inputShuModal" value="25" min="1" max="50" onchange="window.hitungShuData()" class="w-16 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm font-bold rounded-xl px-2 py-2 text-center outline-none">
+                            <input type="number" id="inputShuModal" value="25" min="1" max="50" class="w-16 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm font-bold rounded-xl px-2 py-2 text-center outline-none">
                         </div>
                         <div class="flex items-center gap-2">
                             <label class="text-xs font-bold text-slate-500 uppercase">Jasa Pinjaman (%)</label>
-                            <input type="number" id="inputShuPinjaman" value="25" min="1" max="50" onchange="window.hitungShuData()" class="w-16 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm font-bold rounded-xl px-2 py-2 text-center outline-none">
+                            <input type="number" id="inputShuPinjaman" value="25" min="1" max="50" class="w-16 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm font-bold rounded-xl px-2 py-2 text-center outline-none">
                         </div>
                         <div class="flex items-center gap-2">
                             <label class="text-xs font-bold text-slate-500 uppercase">Total SHU (Rp)</label>
-                            <input type="number" id="inputTotalShu" value="2500000" onchange="window.hitungShuData()" class="w-32 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm font-bold rounded-xl px-3 py-2 outline-none">
+                            <input type="number" id="inputTotalShu" value="2500000" class="w-32 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm font-bold rounded-xl px-3 py-2 outline-none">
                         </div>
                     </div>
                 </div>
@@ -661,7 +652,7 @@
                                 <span class="text-[10px] font-extrabold uppercase bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 px-2.5 py-0.5 rounded-full">Tabungan Khusus</span>
                                 <h3 class="text-lg font-bold text-slate-800 dark:text-white mt-1">Simpanan Lebaran / THR Vault</h3>
                             </div>
-                            <button onclick="window.bukaModalLebaran()" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-3.5 py-2 rounded-xl text-xs transition">Setor / Atur Target</button>
+                            <button id="openLebaranModalBtn" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-3.5 py-2 rounded-xl text-xs transition">Setor / Atur Target</button>
                         </div>
                         <div class="bg-slate-50 dark:bg-slate-800 p-4 rounded-xl space-y-2">
                             <div class="flex justify-between text-xs font-semibold">
@@ -681,7 +672,7 @@
                                 <span class="text-[10px] font-extrabold uppercase bg-purple-100 text-purple-800 dark:bg-purple-950 dark:text-purple-300 px-2.5 py-0.5 rounded-full">Partisipasi Aktif</span>
                                 <h3 class="text-lg font-bold text-slate-800 dark:text-white mt-1">Voting & Aspirasi Keluarga</h3>
                             </div>
-                            <button onclick="window.bukaModalVoting()" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-3.5 py-2 rounded-xl text-xs transition">+ Buat Voting</button>
+                            <button id="openVotingModalBtn" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-3.5 py-2 rounded-xl text-xs transition">+ Buat Voting</button>
                         </div>
                         <div id="containerVotingList" class="space-y-3 max-h-48 overflow-y-auto"></div>
                     </div>
@@ -694,7 +685,7 @@
                                 <span class="text-[10px] font-extrabold uppercase bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 px-2.5 py-0.5 rounded-full">Sosial & Amal</span>
                                 <h3 class="text-lg font-bold text-slate-800 dark:text-white mt-1">Kalkulator ZIS Keluarga</h3>
                             </div>
-                            <button onclick="window.bukaModalZis()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3.5 py-2 rounded-xl text-xs transition">Hitung ZIS</button>
+                            <button id="openZisModalBtn" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3.5 py-2 rounded-xl text-xs transition">Hitung ZIS</button>
                         </div>
                         <p class="text-xs text-slate-500 dark:text-slate-400">Salurkan Zakat, Infaq, atau Sedekah Anda langsung dari saldo simpanan untuk kas sosial keluarga.</p>
                         <div id="zisStatusSummary" class="bg-emerald-50 dark:bg-emerald-950/50 p-3.5 rounded-xl text-xs text-emerald-800 dark:text-emerald-300 font-medium">
@@ -728,8 +719,8 @@
                             <h3 id="portalTotalSaldoAgt" class="text-xl font-bold text-emerald-700 dark:text-emerald-400 mt-0.5">Rp 0</h3>
                         </div>
                         <div class="flex gap-2">
-                            <button onclick="window.bukaModalTransaksiMandiriSetor()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3.5 py-2 rounded-xl text-xs font-bold shadow-sm transition">Setor</button>
-                            <button onclick="window.bukaModalTransaksiMandiriTarik()" class="bg-rose-100 text-rose-700 dark:bg-rose-950 dark:text-rose-300 px-3.5 py-2 rounded-xl text-xs font-bold transition">Tarik</button>
+                            <button id="openSetorModalBtn" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3.5 py-2 rounded-xl text-xs font-bold shadow-sm transition">Setor</button>
+                            <button id="openTarikModalBtn" class="bg-rose-100 text-rose-700 dark:bg-rose-950 dark:text-rose-300 px-3.5 py-2 rounded-xl text-xs font-bold transition">Tarik</button>
                         </div>
                     </div>
 
@@ -744,7 +735,7 @@
                                 <p id="portalBadgeRole" class="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">Anggota</p>
                             </div>
                         </div>
-                        <button onclick="window.bukaModalPinVerifikasi()" class="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 px-3 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1">
+                        <button id="openProfilTabBtn" class="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 px-3 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756-2.924 0-3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path></svg>
                             Profil
                         </button>
@@ -754,10 +745,6 @@
                 <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 p-5 w-full">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-lg font-bold text-slate-800 dark:text-white">Grafik Perkembangan Simpanan Pribadi</h3>
-                        <select id="portalFilterWaktu" onchange="window.renderPortalAnggota()" class="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm font-medium rounded-lg p-2 outline-none">
-                            <option value="6months" selected>6 Bulan Terakhir</option>
-                            <option value="1year">1 Tahun Terakhir</option>
-                        </select>
                     </div>
                     <div class="relative h-72 w-full"><canvas id="portalChart"></canvas></div>
                 </div>
@@ -765,11 +752,6 @@
                 <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 p-6 space-y-4">
                     <div class="flex justify-between items-center">
                         <h3 class="text-lg font-bold text-slate-800 dark:text-white">Riwayat Simpanan & Penarikan Pribadi</h3>
-                        <select id="portalLimit" onchange="window.renderPortalAnggota()" class="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-xs rounded-xl px-3 py-1.5 outline-none font-medium">
-                            <option value="10" selected>10</option>
-                            <option value="50">50</option>
-                            <option value="all">Semua</option>
-                        </select>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse">
@@ -795,7 +777,7 @@
                     <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-1">Pengaturan Profil & Rekening</h2>
                     <p class="text-sm text-slate-500 dark:text-slate-400 mb-6">Perbarui nomor kontak, email, rekening bank, dan PIN keamanan.</p>
 
-                    <form onsubmit="window.simpanProfilMandiri(event)" class="space-y-4">
+                    <form id="mandiriProfilForm" class="space-y-4">
                         <div>
                             <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Nomor HP / WhatsApp</label>
                             <input type="text" id="mandiriKontak" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm rounded-xl p-3 outline-none">
@@ -809,15 +791,11 @@
                             <input type="text" id="mandiriBank" placeholder="Contoh: BCA 1234567890 a.n Nama" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm rounded-xl p-3 outline-none">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Ganti Foto Diri</label>
-                            <input type="file" id="mandiriFotoFile" accept="image/*" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm rounded-xl p-2.5 outline-none">
-                        </div>
-                        <div>
                             <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">PIN Keamanan Baru</label>
                             <input type="password" id="mandiriPin" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-center text-xl tracking-widest rounded-xl p-3 outline-none font-bold" placeholder="••••">
                         </div>
                         <div class="pt-4 flex justify-end gap-3">
-                            <button type="button" onclick="window.switchTab('portal')" class="px-5 py-3 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-bold text-sm">Kembali</button>
+                            <button type="button" id="backToPortalBtn" class="px-5 py-3 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-bold text-sm">Kembali</button>
                             <button type="submit" class="px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-md transition">Simpan Perubahan</button>
                         </div>
                     </form>
@@ -838,21 +816,17 @@
             </div>
             <p id="waNotifText" class="text-xs leading-relaxed text-slate-100 font-medium">Transaksi Anda telah disetujui oleh Pengurus.</p>
         </div>
-        <button onclick="window.tutupWaToast()" class="text-emerald-400 hover:text-white p-1"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+        <button id="closeWaToastBtn" class="text-emerald-400 hover:text-white p-1"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
     </div>
 
-    <!-- Modals -->
     <div id="modalPinVerifikasi" class="fixed inset-0 bg-slate-900/80 z-50 hidden flex items-center justify-center p-4 backdrop-blur-md">
         <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-800 w-full max-w-sm p-6 text-center">
-            <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-            </div>
             <h3 class="font-bold text-lg text-slate-800 dark:text-white mb-1">Verifikasi PIN Keamanan</h3>
             <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">Masukkan PIN Anda untuk mengakses Menu Edit Profil & Rekening.</p>
-            <form onsubmit="window.verifikasiPinProfil(event)" class="space-y-4">
+            <form id="verifPinForm" class="space-y-4">
                 <input type="password" id="inputVerifPin" required placeholder="••••" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-center text-xl tracking-widest rounded-xl p-3 outline-none font-bold">
                 <div class="flex gap-2">
-                    <button type="button" onclick="window.tutupModalPinVerifikasi()" class="flex-1 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-semibold text-xs">Batal</button>
+                    <button type="button" id="closeVerifPinBtn" class="flex-1 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-semibold text-xs">Batal</button>
                     <button type="submit" class="flex-1 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs shadow-md">Verifikasi</button>
                 </div>
             </form>
@@ -865,8 +839,8 @@
             <p class="text-xs text-slate-500 dark:text-slate-400">Masukkan nomor HP terdaftar Anda. Super Admin dapat mereset PIN Anda kembali ke default.</p>
             <input type="text" id="lupaPinKontak" placeholder="08..." class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm rounded-xl p-3 outline-none">
             <div class="flex gap-2">
-                <button type="button" onclick="document.getElementById('modalLupaPin').classList.add('hidden')" class="flex-1 px-4 py-2 rounded-xl border text-slate-600 text-xs">Batal</button>
-                <button type="button" onclick="window.kirimPermintaanResetPin()" class="flex-1 px-4 py-2 rounded-xl bg-blue-600 text-white font-bold text-xs">Kirim Permintaan</button>
+                <button type="button" id="closeLupaPinBtn" class="flex-1 px-4 py-2 rounded-xl border text-slate-600 text-xs">Batal</button>
+                <button type="button" id="kirimResetPinBtn" class="flex-1 px-4 py-2 rounded-xl bg-blue-600 text-white font-bold text-xs">Kirim Permintaan</button>
             </div>
         </div>
     </div>
@@ -874,7 +848,7 @@
     <div id="modalLebaran" class="fixed inset-0 bg-slate-900/80 z-50 hidden flex items-center justify-center p-4 backdrop-blur-md">
         <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-800 w-full max-w-md p-6 space-y-4">
             <h3 class="font-bold text-lg text-slate-800 dark:text-white">Tabungan Lebaran / THR Vault</h3>
-            <form onsubmit="window.simpanTabunganLebaran(event)" class="space-y-4">
+            <form id="lebaranForm" class="space-y-4">
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Target Nominal (Rp)</label>
                     <input type="number" id="lebaranTargetInput" value="3000000" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm rounded-xl p-3 outline-none">
@@ -884,7 +858,7 @@
                     <input type="number" id="lebaranSetorInput" value="100000" min="10000" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm rounded-xl p-3 outline-none">
                 </div>
                 <div class="flex justify-end gap-2 pt-2">
-                    <button type="button" onclick="document.getElementById('modalLebaran').classList.add('hidden')" class="px-4 py-2.5 rounded-xl border text-slate-600 text-xs">Batal</button>
+                    <button type="button" id="closeLebaranBtn" class="px-4 py-2.5 rounded-xl border text-slate-600 text-xs">Batal</button>
                     <button type="submit" class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs shadow-md">Simpan Tabungan Lebaran</button>
                 </div>
             </form>
@@ -894,7 +868,7 @@
     <div id="modalVoting" class="fixed inset-0 bg-slate-900/80 z-50 hidden flex items-center justify-center p-4 backdrop-blur-md">
         <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-800 w-full max-w-md p-6 space-y-4">
             <h3 class="font-bold text-lg text-slate-800 dark:text-white">Buat Voting / Aspirasi Keluarga Baru</h3>
-            <form onsubmit="window.buatVotingBaru(event)" class="space-y-4">
+            <form id="votingForm" class="space-y-4">
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Topik / Pertanyaan Voting</label>
                     <input type="text" id="votingTopik" placeholder="Cth: Lokasi Liburan Keluarga Tahun Ini" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm rounded-xl p-3 outline-none">
@@ -904,7 +878,7 @@
                     <input type="text" id="votingOpsi" placeholder="Cth: Puncak, Bali, Bandung" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm rounded-xl p-3 outline-none">
                 </div>
                 <div class="flex justify-end gap-2 pt-2">
-                    <button type="button" onclick="document.getElementById('modalVoting').classList.add('hidden')" class="px-4 py-2.5 rounded-xl border text-slate-600 text-xs">Batal</button>
+                    <button type="button" id="closeVotingBtn" class="px-4 py-2.5 rounded-xl border text-slate-600 text-xs">Batal</button>
                     <button type="submit" class="px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs shadow-md">Publikasikan Voting</button>
                 </div>
             </form>
@@ -914,7 +888,7 @@
     <div id="modalZis" class="fixed inset-0 bg-slate-900/80 z-50 hidden flex items-center justify-center p-4 backdrop-blur-md">
         <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-800 w-full max-w-md p-6 space-y-4">
             <h3 class="font-bold text-lg text-slate-800 dark:text-white">Kalkulator ZIS (Zakat, Infaq, Sedekah)</h3>
-            <form onsubmit="window.simpanZis(event)" class="space-y-4">
+            <form id="zisForm" class="space-y-4">
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Jenis Penyaluran</label>
                     <select id="zisJenis" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm rounded-xl p-3 outline-none">
@@ -928,7 +902,7 @@
                     <input type="number" id="zisNominal" value="50000" min="1000" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm rounded-xl p-3 outline-none">
                 </div>
                 <div class="flex justify-end gap-2 pt-2">
-                    <button type="button" onclick="document.getElementById('modalZis').classList.add('hidden')" class="px-4 py-2.5 rounded-xl border text-slate-600 text-xs">Batal</button>
+                    <button type="button" id="closeZisBtn" class="px-4 py-2.5 rounded-xl border text-slate-600 text-xs">Batal</button>
                     <button type="submit" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md">Salurkan ZIS</button>
                 </div>
             </form>
@@ -938,10 +912,10 @@
     <div id="modalEditPengumuman" class="fixed inset-0 bg-slate-900/50 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
         <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-800 w-full max-w-md p-6">
             <h3 class="font-bold text-lg text-slate-800 dark:text-white mb-2">Edit Papan Pengumuman Keluarga</h3>
-            <form onsubmit="window.simpanPengumumanBaru(event)" class="space-y-4">
+            <form id="pengumumanForm" class="space-y-4">
                 <textarea id="inputPengumumanText" rows="4" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm rounded-xl p-3 outline-none font-semibold"></textarea>
                 <div class="flex justify-end gap-2">
-                    <button type="button" onclick="window.tutupModalEditPengumuman()" class="px-4 py-2.5 rounded-xl border text-slate-600 text-xs">Batal</button>
+                    <button type="button" id="closePengumumanBtn" class="px-4 py-2.5 rounded-xl border text-slate-600 text-xs">Batal</button>
                     <button type="submit" class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs shadow-md">Simpan Pengumuman</button>
                 </div>
             </form>
@@ -952,46 +926,39 @@
         <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-100 dark:border-slate-800 w-full max-w-md overflow-hidden transform transition-all max-h-[90vh] overflow-y-auto">
             <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center bg-slate-50 dark:bg-slate-800 sticky top-0 z-10">
                 <h3 id="modalTransaksiTitle" class="font-bold text-lg text-slate-800 dark:text-white">Catat Transaksi Baru</h3>
-                <button onclick="window.tutupModalTransaksi()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+                <button id="closeTrxModalBtn" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
             </div>
-            <form id="formTransaksi" onsubmit="window.simpanTransaksi(event)" class="p-6 space-y-4">
+            <form id="formTransaksi" class="p-6 space-y-4">
                 <input type="hidden" id="editTransaksiId">
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Tipe Transaksi</label>
                     <div class="grid grid-cols-2 gap-3">
                         <label class="flex items-center justify-center gap-2 p-3 border border-slate-200 dark:border-slate-700 rounded-xl cursor-pointer hover:bg-slate-50 font-semibold text-sm">
-                            <input type="radio" name="tipeTrx" value="setor" checked onchange="window.updateKategoriOpsi()" class="accent-emerald-600"> Setor Tabungan
+                            <input type="radio" name="tipeTrx" value="setor" checked class="accent-emerald-600"> Setor Tabungan
                         </label>
                         <label class="flex items-center justify-center gap-2 p-3 border border-slate-200 dark:border-slate-700 rounded-xl cursor-pointer hover:bg-slate-50 font-semibold text-sm">
-                            <input type="radio" name="tipeTrx" value="tarik" onchange="window.updateKategoriOpsi()" class="accent-rose-600"> Pencairan / Penarikan
+                            <input type="radio" name="tipeTrx" value="tarik" class="accent-rose-600"> Pencairan / Penarikan
                         </label>
                     </div>
                 </div>
 
                 <div id="containerAnggotaTrx">
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Pilih Anggota</label>
-                    <select id="trxAnggotaId" required onchange="window.cekSaldoAnggota()" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm rounded-xl p-3 outline-none"></select>
-                    <p id="infoSaldoAktif" class="text-xs text-slate-500 mt-1 font-medium"></p>
+                    <select id="trxAnggotaId" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm rounded-xl p-3 outline-none"></select>
                 </div>
 
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Kategori</label>
-                    <select id="trxKategori" onchange="window.updateKategoriPenjelasan()" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm rounded-xl p-3 outline-none">
+                    <select id="trxKategori" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm rounded-xl p-3 outline-none">
                         <option value="Simpanan Pokok">Simpanan Pokok</option>
                         <option value="Simpanan Wajib">Simpanan Wajib</option>
                         <option value="Simpanan Sukarela">Simpanan Sukarela</option>
                     </select>
-                    <p id="infoKatPenjelasan" class="text-xs text-emerald-700 bg-emerald-50 dark:bg-emerald-950 p-2.5 rounded-xl mt-2 font-medium">Uang pangkal awal yang dibayarkan sekali saat bergabung.</p>
                 </div>
 
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Nominal (Rp)</label>
                     <input type="number" id="trxNominal" min="1000" required placeholder="Contoh: 50000" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm rounded-xl p-3 outline-none">
-                </div>
-
-                <div id="uploadBuktiContainer">
-                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Upload Bukti Setoran (Opsional)</label>
-                    <input type="file" id="trxBuktiFile" accept="image/*" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm rounded-xl p-2.5 outline-none">
                 </div>
 
                 <div>
@@ -1000,7 +967,7 @@
                 </div>
 
                 <div class="pt-4 flex items-center justify-end gap-3 border-t border-slate-100 dark:border-slate-800">
-                    <button type="button" onclick="window.tutupModalTransaksi()" class="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-600 font-semibold text-sm">Batal</button>
+                    <button type="button" id="closeTrxModalBtn2" class="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-600 font-semibold text-sm">Batal</button>
                     <button type="submit" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm shadow-md">Simpan Transaksi</button>
                 </div>
             </form>
@@ -1010,7 +977,7 @@
     <div id="modalOperasional" class="fixed inset-0 bg-slate-900/50 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
         <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-100 dark:border-slate-800 w-full max-w-md p-6 space-y-4">
             <h3 class="font-bold text-lg text-slate-800 dark:text-white">Catat Biaya Operasional Baru</h3>
-            <form onsubmit="window.simpanOperasional(event)" class="space-y-4">
+            <form id="operasionalForm" class="space-y-4">
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Keterangan Biaya</label>
                     <input type="text" id="opKeterangan" required placeholder="Contoh: Pembelian server bulanan" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm rounded-xl p-3 outline-none">
@@ -1020,7 +987,7 @@
                     <input type="number" id="opNominal" min="1000" required placeholder="Contoh: 150000" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm rounded-xl p-3 outline-none">
                 </div>
                 <div class="flex justify-end gap-2 pt-2">
-                    <button type="button" onclick="window.tutupModalOperasional()" class="px-4 py-2.5 rounded-xl border text-slate-600 text-xs">Batal</button>
+                    <button type="button" id="closeOpModalBtn" class="px-4 py-2.5 rounded-xl border text-slate-600 text-xs">Batal</button>
                     <button type="submit" class="px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs shadow-md">Simpan Pengeluaran</button>
                 </div>
             </form>
@@ -1031,9 +998,9 @@
         <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-100 dark:border-slate-800 w-full max-w-md overflow-hidden transform transition-all max-h-[90vh] overflow-y-auto">
             <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center bg-slate-50 dark:bg-slate-800 sticky top-0 z-10">
                 <h3 id="modalAnggotaTitle" class="font-bold text-lg text-slate-800 dark:text-white">Tambah Anggota Keluarga</h3>
-                <button onclick="window.tutupModalAnggota()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+                <button id="closeAnggotaModalBtn" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
             </div>
-            <form id="formAnggota" onsubmit="window.simpanAnggota(event)" class="p-6 space-y-4">
+            <form id="formAnggota" class="p-6 space-y-4">
                 <input type="hidden" id="editAnggotaId">
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Nama Lengkap</label>
@@ -1080,7 +1047,7 @@
                     <input type="password" id="agtPin" required value="123" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm rounded-xl p-3 outline-none">
                 </div>
                 <div class="pt-4 flex items-center justify-end gap-3 border-t border-slate-100 dark:border-slate-800">
-                    <button type="button" onclick="window.tutupModalAnggota()" class="px-5 py-2.5 rounded-xl border text-slate-600 text-sm">Batal</button>
+                    <button type="button" id="closeAnggotaModalBtn2" class="px-5 py-2.5 rounded-xl border text-slate-600 text-sm">Batal</button>
                     <button type="submit" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm shadow-md">Simpan Anggota</button>
                 </div>
             </form>
@@ -1090,7 +1057,7 @@
     <div id="modalEditPinjaman" class="fixed inset-0 bg-slate-900/50 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
         <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-100 dark:border-slate-800 w-full max-w-md p-6 space-y-4">
             <h3 class="font-bold text-lg text-slate-800 dark:text-white">Edit Pinjaman Aktif & Tagihan</h3>
-            <form onsubmit="window.simpanEditPinjaman(event)" class="space-y-4">
+            <form id="editPinjamanForm" class="space-y-4">
                 <input type="hidden" id="editPinjamanId">
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Sisa Tagihan (Rp)</label>
@@ -1108,18 +1075,18 @@
                     </select>
                 </div>
                 <div class="flex justify-end gap-2 pt-2">
-                    <button type="button" onclick="window.tutupModalEditPinjaman()" class="px-4 py-2.5 rounded-xl border text-slate-600 text-xs">Batal</button>
+                    <button type="button" id="closeEditPinjamanBtn" class="px-4 py-2.5 rounded-xl border text-slate-600 text-xs">Batal</button>
                     <button type="submit" class="px-5 py-2.5 rounded-xl bg-emerald-600 text-white font-bold text-xs shadow-md">Simpan Perubahan</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <div id="modalBukti" class="fixed inset-0 bg-slate-900/70 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm" onclick="window.tutupModalBukti()">
-        <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl p-4 max-w-lg w-full relative" onclick="event.stopPropagation()">
+    <div id="modalBukti" class="fixed inset-0 bg-slate-900/70 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl p-4 max-w-lg w-full relative">
             <div class="flex justify-between items-center mb-3">
                 <h3 class="font-bold text-slate-800 dark:text-white text-sm">Bukti Transaksi</h3>
-                <button onclick="window.tutupModalBukti()" class="text-slate-400 p-1"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+                <button id="closeBuktiModalBtn" class="text-slate-400 p-1"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
             </div>
             <img id="imgBuktiPreview" src="" alt="Bukti" class="w-full h-auto rounded-xl border object-contain max-h-[70vh]">
         </div>
@@ -1131,7 +1098,7 @@
             <h3 id="customModalTitle" class="font-bold text-lg text-slate-800 dark:text-white mb-2">Konfirmasi</h3>
             <p id="customModalText" class="text-sm text-slate-500 mb-6">Apakah Anda yakin ingin melanjutkan?</p>
             <div class="flex gap-3 justify-center">
-                <button id="customModalBtnCancel" onclick="window.tutupCustomModal()" class="flex-1 px-4 py-2.5 rounded-xl border text-slate-600 font-semibold text-sm">Batal</button>
+                <button id="customModalBtnCancel" class="flex-1 px-4 py-2.5 rounded-xl border text-slate-600 font-semibold text-sm">Batal</button>
                 <button id="customModalBtnYes" class="flex-1 px-4 py-2.5 rounded-xl bg-emerald-600 text-white font-semibold text-sm shadow-md">Ya, Lanjutkan</button>
             </div>
         </div>
@@ -1139,8 +1106,8 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
 
         const firebaseConfig = {
@@ -1153,14 +1120,24 @@
             measurementId: "G-8R85V5VVC6"
         };
 
-        let db, auth, analytics;
+        let db = null, auth = null, analytics = null;
+        let isCloudSynced = false;
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'koperasi-keluarga-v25';
+
         try {
             const app = initializeApp(firebaseConfig);
-            db = getFirestore(app);
             auth = getAuth(app);
-            analytics = getAnalytics(app);
-        } catch (e) {
-            console.warn("Firebase offline mode fallback active.");
+            db = getFirestore(app);
+            try { analytics = getAnalytics(app); } catch(e){}
+            signInAnonymously(auth).then(() => {
+                isCloudSynced = true;
+                console.log("Firebase Cloud Synchronized Successfully.");
+                initCloudListeners();
+            }).catch(err => {
+                console.warn("Firebase Auth fallback to local mode:", err);
+            });
+        } catch(e) {
+            console.warn("Firebase initialization skipped, running local state mode.");
         }
 
         let currentMode = 'admin';
@@ -1174,12 +1151,7 @@
                 { id: 2, nama: "Bapak Sutrisno", keluarga: "Keluarga Sutrisno", peran: "Kepala Keluarga", role: "Admin", kontak: "081234567822", email: "sutrisno@email.com", pin: "1234", tglGabung: "2024-01-01", foto: "", bankTujuan: "BCA 1234567890 a.n Sutrisno" },
                 { id: 3, nama: "Ibu Ratna", keluarga: "Keluarga Sutrisno", peran: "Istri", role: "Bendahara", kontak: "081234567833", email: "ratna@email.com", pin: "1234", tglGabung: "2024-01-01", foto: "", bankTujuan: "Mandiri 0987654321 a.n Ratna" },
                 { id: 4, nama: "Dimas Pratama", keluarga: "Keluarga Sutrisno", peran: "Anak", role: "Anggota", kontak: "081234567844", email: "dimas@email.com", pin: "123", tglGabung: "2025-05-01", foto: "", bankTujuan: "BCA 555666777 a.n Dimas" },
-                { id: 5, nama: "Om Hendra", keluarga: "Keluarga Hendra", peran: "Kepala Keluarga", role: "Sekretaris", kontak: "081234567855", email: "hendra@email.com", pin: "1234", tglGabung: "2024-02-01", foto: "", bankTujuan: "BRI 1122334455 a.n Hendra" },
-                { id: 6, nama: "Tante Siska", keluarga: "Keluarga Hendra", peran: "Istri", role: "Anggota", kontak: "081234567866", email: "siska@email.com", pin: "1234", tglGabung: "2024-02-01", foto: "", bankTujuan: "BCA 111222333 a.n Siska" },
-                { id: 7, nama: "Bapak Yudi", keluarga: "Keluarga Yudi", peran: "Kepala Keluarga", role: "Anggota", kontak: "081234567877", email: "yudi@email.com", pin: "1234", tglGabung: "2023-05-01", foto: "", bankTujuan: "Mandiri 123123 a.n Yudi" },
-                { id: 8, nama: "Ibu Ani", keluarga: "Keluarga Yudi", peran: "Istri", role: "Anggota", kontak: "081234567888", email: "ani@email.com", pin: "1234", tglGabung: "2023-05-01", foto: "", bankTujuan: "BRI 456456 a.n Ani" },
-                { id: 9, nama: "Rian Yudi", keluarga: "Keluarga Yudi", peran: "Anak", role: "Anggota", kontak: "081234567899", email: "rian@email.com", pin: "1234", tglGabung: "2025-01-10", foto: "", bankTujuan: "BNI 789789 a.n Rian" },
-                { id: 10, nama: "Bapak Joko", keluarga: "Keluarga Joko", peran: "Kepala Keluarga", role: "Anggota", kontak: "081234567900", email: "joko@email.com", pin: "1234", tglGabung: "2023-08-15", foto: "", bankTujuan: "BCA 998877 a.n Joko" }
+                { id: 5, nama: "Om Hendra", keluarga: "Keluarga Hendra", peran: "Kepala Keluarga", role: "Sekretaris", kontak: "081234567855", email: "hendra@email.com", pin: "1234", tglGabung: "2024-02-01", foto: "", bankTujuan: "BRI 1122334455 a.n Hendra" }
             ],
             transaksi: [
                 { id: 101, anggotaId: 2, tanggal: "2026-01-01T08:00:00", tipe: "setor", kategori: "Simpanan Pokok", nominal: 500000, status: "approved", bukti: "", keterangan: "Simpanan Pokok awal" },
@@ -1194,13 +1166,42 @@
                 { id: 701, tanggal: "2026-01-02", keterangan: "Biaya Pemeliharaan Server Sistem", nominal: 150000 }
             ],
             logPersetujuan: [],
-            notifikasi: [],
             lebaranVaults: {},
             votings: [
                 { id: 1, topik: "Lokasi Silaturahmi & Gathering Lebaran Keluarga", opsi: ["Puncak Bogor", "Pantai Anyer", "Villa Lembang"], suara: { "Puncak Bogor": [2, 3], "Pantai Anyer": [4], "Villa Lembang": [] } }
             ],
             zisRecords: []
         };
+
+        async function saveCloudState() {
+            localStorage.setItem('koperasi_keluarga_state_v250_pro', JSON.stringify(appState));
+            if (!isCloudSynced || !db) return;
+            try {
+                const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'main_state');
+                await setDoc(docRef, appState);
+            } catch (err) {
+                console.error("Cloud save error:", err);
+            }
+        }
+
+        function initCloudListeners() {
+            if (!db) return;
+            try {
+                const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'main_state');
+                onSnapshot(docRef, (docSnap) => {
+                    if (docSnap.exists()) {
+                        const cloudData = docSnap.data();
+                        appState = { ...appState, ...cloudData };
+                        localStorage.setItem('koperasi_keluarga_state_v250_pro', JSON.stringify(appState));
+                        refreshActiveUI();
+                    }
+                }, (error) => {
+                    console.error("Cloud listener error:", error);
+                });
+            } catch (e) {
+                console.warn("Cloud listener attachment failed.");
+            }
+        }
 
         function loadStorage() {
             const saved = localStorage.getItem('koperasi_keluarga_state_v250_pro');
@@ -1212,11 +1213,7 @@
             }
         }
 
-        function saveStorage() {
-            localStorage.setItem('koperasi_keluarga_state_v250_pro', JSON.stringify(appState));
-        }
-
-        window.onload = function() {
+        window.addEventListener('DOMContentLoaded', () => {
             loadStorage();
             if (localStorage.getItem('kop_dark_mode') === 'true') {
                 document.documentElement.classList.add('dark');
@@ -1229,18 +1226,19 @@
                     currentUser = agt;
                     document.getElementById('loginScreen').classList.add('hidden');
                     postLoginSetup();
+                    attachEventListeners();
                     return;
                 }
             }
             initLoginScreen();
-        };
+            attachEventListeners();
+        });
 
         function toggleDarkMode() {
             const html = document.documentElement;
             html.classList.toggle('dark');
             localStorage.setItem('kop_dark_mode', html.classList.contains('dark') ? 'true' : 'false');
         }
-        window.toggleDarkMode = toggleDarkMode;
 
         function initLoginScreen() {
             document.getElementById('loginKontak').value = '';
@@ -1254,10 +1252,10 @@
             const pinInput = document.getElementById('loginPin').value.trim();
 
             const agt = appState.anggota.find(a => a.kontak === kontakInput);
-            if(!agt) { window.bukaCustomModal('Login Gagal', 'Nomor HP / WhatsApp tidak terdaftar dalam sistem keluarga.', 'danger'); return; }
+            if(!agt) { bukaCustomModal('Login Gagal', 'Nomor HP / WhatsApp tidak terdaftar dalam sistem keluarga.', 'danger'); return; }
 
             const expectedPin = agt.pin || (kontakInput === '123456' ? '123456' : '123');
-            if(pinInput !== expectedPin) { window.bukaCustomModal('PIN Salah', 'PIN Keamanan salah.', 'danger'); return; }
+            if(pinInput !== expectedPin) { bukaCustomModal('PIN Salah', 'PIN Keamanan salah.', 'danger'); return; }
 
             currentUser = agt;
             localStorage.setItem('kop_active_user_id', agt.id);
@@ -1265,14 +1263,12 @@
             postLoginSetup();
             triggerWhatsAppToast(`Halo ${agt.nama}, Anda berhasil masuk ke Koperasi Keluarga.`);
         }
-        window.handleLogin = handleLogin;
 
         function handleLogout() {
             currentUser = null;
             localStorage.removeItem('kop_active_user_id');
             initLoginScreen();
         }
-        window.handleLogout = handleLogout;
 
         function isUserAdmin(agt) {
             if (!agt) return false;
@@ -1296,10 +1292,10 @@
 
             if (currentUser.kontak === '123456' || isUserAdmin(currentUser)) {
                 modeSwitcher.classList.remove('hidden');
-                window.switchMode('admin');
+                switchMode('admin');
             } else {
                 modeSwitcher.classList.add('hidden');
-                window.switchMode('member');
+                switchMode('member');
             }
         }
 
@@ -1309,7 +1305,7 @@
 
             if (mode === 'admin') {
                 if (!isUserAdmin(currentUser) && currentUser.kontak !== '123456') {
-                    window.bukaCustomModal('Akses Ditolak', `Akun "${currentUser.nama}" (${currentUser.role}) tidak memiliki hak akses sebagai Pengurus!`, 'danger');
+                    bukaCustomModal('Akses Ditolak', `Akun "${currentUser.nama}" (${currentUser.role}) tidak memiliki hak akses sebagai Pengurus!`, 'danger');
                     return;
                 }
 
@@ -1322,7 +1318,7 @@
                 
                 updateHeaderAvatar();
                 renderAdminSidebar();
-                window.switchTab('dashboard');
+                switchTab('dashboard');
             } else {
                 currentMode = 'member';
                 memberBtn.className = "px-3 py-1.5 rounded-lg transition bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm";
@@ -1333,10 +1329,9 @@
                 
                 updateHeaderAvatar();
                 renderMemberSidebar();
-                window.switchTab('portal');
+                switchTab('portal');
             }
         }
-        window.switchMode = switchMode;
 
         function updateHeaderAvatar() {
             const avatarText = document.getElementById('headerUserAvatarText');
@@ -1366,7 +1361,6 @@
             const toast = document.getElementById('waNotificationToast');
             toast.classList.add('translate-y-24', 'opacity-0');
         }
-        window.tutupWaToast = tutupWaToast;
 
         function renderAdminSidebar() {
             document.getElementById('sidebarNavTitle').innerText = "Menu Utama Pengurus";
@@ -1374,83 +1368,84 @@
             const pendingCount = appState.transaksi.filter(t => t.status === 'pending').length;
             
             nav.innerHTML = `
-                <button onclick="window.switchTab('dashboard')" id="nav-dashboard" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition text-emerald-700 bg-emerald-50 dark:bg-emerald-950/50 dark:text-emerald-300">
+                <button data-tab="dashboard" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition text-emerald-700 bg-emerald-50 dark:bg-emerald-950/50 dark:text-emerald-300">
                     <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
                     <span class="truncate">Beranda Utama</span>
                 </button>
-                <button onclick="window.switchTab('persetujuan')" id="nav-persetujuan" class="w-full flex items-center justify-between px-4 py-3 rounded-xl font-semibold text-sm transition text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800">
+                <button data-tab="persetujuan" class="nav-btn w-full flex items-center justify-between px-4 py-3 rounded-xl font-semibold text-sm transition text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800">
                     <div class="flex items-center gap-3">
                         <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                         <span class="truncate">Persetujuan Transaksi</span>
                     </div>
                     ${pendingCount > 0 ? `<span class="bg-amber-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">${pendingCount}</span>` : ''}
                 </button>
-                <button onclick="window.switchTab('simpanan')" id="nav-simpanan" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800">
+                <button data-tab="simpanan" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800">
                     <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                     <span class="truncate">Buku Simpanan</span>
                 </button>
-                <button onclick="window.switchTab('pinjaman')" id="nav-pinjaman" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800">
+                <button data-tab="pinjaman" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800">
                     <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     <span class="truncate">Pinjaman & Angsuran</span>
                 </button>
-                <button onclick="window.switchTab('anggota')" id="nav-anggota" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800">
+                <button data-tab="anggota" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800">
                     <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                     <span class="truncate">Daftar Anggota</span>
                 </button>
-                <button onclick="window.switchTab('shu')" id="nav-shu" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800">
+                <button data-tab="shu" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800">
                     <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
                     <span class="truncate">Menu SHU</span>
                 </button>
             `;
+            attachNavListeners();
         }
 
         function renderMemberSidebar() {
             document.getElementById('sidebarNavTitle').innerText = "Portal Anggota";
             const nav = document.getElementById('sidebarNavContainer');
             nav.innerHTML = `
-                <button onclick="window.switchTab('portal')" id="nav-portal" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition text-emerald-700 bg-emerald-50 dark:bg-emerald-950/50 dark:text-emerald-300">
+                <button data-tab="portal" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition text-emerald-700 bg-emerald-50 dark:bg-emerald-950/50 dark:text-emerald-300">
                     <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                     <span class="truncate">Dashboard Pribadi</span>
                 </button>
-                <button onclick="window.switchTab('pinjaman')" id="nav-pinjaman" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800">
+                <button data-tab="pinjaman" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800">
                     <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     <span class="truncate">Pinjaman & Angsuran</span>
                 </button>
-                <button onclick="window.switchTab('shu')" id="nav-shu" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800">
+                <button data-tab="shu" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800">
                     <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
                     <span class="truncate">Perolehan SHU</span>
                 </button>
-                <button onclick="window.bukaModalPinVerifikasi()" id="nav-profil-saya" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800">
+                <button data-action="open-pin-verif" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800">
                     <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756-2.924 0-3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path></svg>
                     <span class="truncate">Profil & Rekening</span>
                 </button>
             `;
+            attachNavListeners();
         }
 
         function toggleSidebar() {
             document.getElementById('sidebar').classList.toggle('-translate-x-full');
             document.getElementById('sidebarOverlay').classList.toggle('hidden');
         }
-        window.toggleSidebar = toggleSidebar;
 
         function switchTab(tabId) {
             ['dashboard', 'persetujuan', 'simpanan', 'pinjaman', 'anggota', 'shu', 'portal', 'profil-saya'].forEach(t => {
                 const el = document.getElementById(`tab-${t}`);
                 if(el) el.classList.add('hidden');
-                const nav = document.getElementById(`nav-${t}`);
-                if(nav) {
-                    nav.classList.remove('text-emerald-700', 'bg-emerald-50', 'dark:bg-emerald-950/50', 'dark:text-emerald-300');
-                    nav.classList.add('text-slate-600', 'dark:text-slate-300', 'hover:bg-slate-50', 'dark:hover:bg-slate-800');
-                }
+            });
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-emerald-700', 'bg-emerald-50', 'dark:bg-emerald-950/50', 'dark:text-emerald-300');
+                btn.classList.add('text-slate-600', 'dark:text-slate-300', 'hover:bg-slate-50', 'dark:hover:bg-slate-800');
             });
 
             const targetTab = document.getElementById(`tab-${tabId}`);
             if(targetTab) targetTab.classList.remove('hidden');
 
-            const targetNav = document.getElementById(`nav-${tabId}`);
-            if(targetNav) {
-                targetNav.classList.remove('text-slate-600', 'dark:text-slate-300', 'hover:bg-slate-50', 'dark:hover:bg-slate-800');
-                targetNav.classList.add('text-emerald-700', 'bg-emerald-50', 'dark:bg-emerald-950/50', 'dark:text-emerald-300');
+            const activeBtn = document.querySelector(`.nav-btn[data-tab="${tabId}"]`);
+            if(activeBtn) {
+                activeBtn.classList.remove('text-slate-600', 'dark:text-slate-300', 'hover:bg-slate-50', 'dark:hover:bg-slate-800');
+                activeBtn.classList.add('text-emerald-700', 'bg-emerald-50', 'dark:bg-emerald-950/50', 'dark:text-emerald-300');
             }
 
             if(window.innerWidth < 1024) toggleSidebar();
@@ -1463,7 +1458,16 @@
             else if(tabId === 'shu') renderShu();
             else if(tabId === 'portal') renderPortalAnggota();
         }
-        window.switchTab = switchTab;
+
+        function refreshActiveUI() {
+            const activeTab = document.querySelector('main > div:not(.hidden)');
+            if(activeTab) {
+                const id = activeTab.id.replace('tab-', '');
+                switchTab(id);
+            } else {
+                renderDashboard();
+            }
+        }
 
         let kkChartInstance = null;
         let cashflowChartInstance = null;
@@ -1546,7 +1550,6 @@
                 options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } }, scales: { y: { beginAtZero: true } } }
             });
         }
-        window.renderGrafikArusKas = renderGrafikArusKas;
 
         function renderRecentTransaksi() {
             const tbody = document.getElementById('recentTransaksiBody');
@@ -1609,10 +1612,10 @@
                         <td class="py-4 px-6 text-slate-600 dark:text-slate-300">${trx.kategori}</td>
                         <td class="py-4 px-6 font-bold ${isSetor ? 'text-emerald-600' : 'text-rose-600'}">${isSetor ? '+' : '-'} ${formatRupiah(trx.nominal)}</td>
                         <td class="py-4 px-6">${statusBadge}</td>
-                        <td class="py-4 px-6">${trx.bukti ? `<button onclick="window.bukaModalBukti('${trx.bukti}')" class="text-emerald-600 hover:underline font-semibold text-xs">Lihat</button>` : '-'}</td>
+                        <td class="py-4 px-6">${trx.bukti ? `<button data-bukti="${trx.bukti}" class="view-bukti-btn text-emerald-600 hover:underline font-semibold text-xs">Lihat</button>` : '-'}</td>
                         <td class="py-4 px-6 text-slate-500 text-xs">${trx.keterangan || '-'}</td>
                         <td class="py-4 px-6 text-center no-print">
-                            <button onclick="window.hapusTransaksi(${trx.id})" class="p-2 text-slate-400 hover:text-rose-600 rounded-lg transition"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
+                            <button data-id="${trx.id}" class="del-trx-btn p-2 text-slate-400 hover:text-rose-600 rounded-lg transition"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
                         </td>
                     </tr>
                 `;
@@ -1620,8 +1623,8 @@
             document.getElementById('rekapCount').innerText = `Menampilkan ${displayedFiltered.length} dari ${filtered.length} transaksi`;
             document.getElementById('rekapMasuk').innerText = formatRupiah(totalMasuk);
             document.getElementById('rekapKeluar').innerText = formatRupiah(totalKeluar);
+            attachTransactionDynamicListeners();
         }
-        window.renderTabelTransaksi = renderTabelTransaksi;
 
         function renderTabelBebanOperasional() {
             const tbody = document.getElementById('tabelBebanOperasionalBody');
@@ -1653,17 +1656,18 @@
                         <td class="py-4 px-4 font-semibold text-slate-800 dark:text-white">${agt ? agt.nama : 'Anggota'}</td>
                         <td class="py-4 px-4"><span class="px-2.5 py-1 rounded-full text-xs font-bold ${isSetor ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'}">${isSetor ? 'Setoran' : 'Pencairan'}</span><span class="text-xs text-slate-600 dark:text-slate-400 block mt-1">${trx.kategori}</span></td>
                         <td class="py-4 px-4 font-bold ${isSetor ? 'text-emerald-600' : 'text-rose-600'}">${isSetor ? '+' : '-'} ${formatRupiah(trx.nominal)}</td>
-                        <td class="py-4 px-4">${trx.bukti ? `<button onclick="window.bukaModalBukti('${trx.bukti}')" class="text-emerald-600 hover:underline font-semibold text-xs">Lihat</button>` : '-'}</td>
+                        <td class="py-4 px-4">${trx.bukti ? `<button data-bukti="${trx.bukti}" class="view-bukti-btn text-emerald-600 hover:underline font-semibold text-xs">Lihat</button>` : '-'}</td>
                         <td class="py-4 px-4 text-slate-500 text-xs">${trx.keterangan || '-'}</td>
                         <td class="py-4 px-4 text-center">
                             <div class="flex items-center justify-center gap-2">
-                                <button onclick="window.approveTransaksi(${trx.id}, true)" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs">Setujui</button>
-                                <button onclick="window.approveTransaksi(${trx.id}, false)" class="bg-rose-100 text-rose-700 font-bold px-3 py-1.5 rounded-lg text-xs">Tolak</button>
+                                <button data-id="${trx.id}" data-approve="true" class="approve-btn bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs">Setujui</button>
+                                <button data-id="${trx.id}" data-approve="false" class="approve-btn bg-rose-100 text-rose-700 font-bold px-3 py-1.5 rounded-lg text-xs">Tolak</button>
                             </div>
                         </td>
                     </tr>
                 `;
             }).join('');
+            attachApprovalDynamicListeners();
         }
 
         function renderLogPersetujuan() {
@@ -1699,27 +1703,25 @@
                     status: isApproved ? 'DISETUJUI' : 'DITOLAK',
                     pengurus: currentUser.nama
                 });
-                saveStorage();
+                saveCloudState();
                 if(!isBatch) { 
                     renderPersetujuanSetoran(); 
                     renderLogPersetujuan(); 
                     renderDashboard(); 
-                    window.bukaCustomModal('Berhasil', isApproved ? 'Disetujui!' : 'Ditolak.', isApproved ? 'success' : 'danger'); 
+                    bukaCustomModal('Berhasil', isApproved ? 'Disetujui!' : 'Ditolak.', isApproved ? 'success' : 'danger'); 
                     triggerWhatsAppToast(`Notifikasi WA ke ${agt ? agt.nama : 'Anggota'}: Transaksi ${trx.kategori} ${formatRupiah(trx.nominal)} telah ${isApproved ? 'DISETUJUI' : 'DITOLAK'}.`);
                 }
             }
         }
-        window.approveTransaksi = approveTransaksi;
 
         function approveAllSelected() {
             const checkboxes = document.querySelectorAll('.row-approval-checkbox:checked');
             checkboxes.forEach(cb => approveTransaksi(Number(cb.value), true, true));
-            saveStorage();
+            saveCloudState();
             renderPersetujuanSetoran(); renderLogPersetujuan(); renderDashboard();
-            window.bukaCustomModal('Berhasil', 'Semua transaksi terpilih berhasil disetujui!', 'success');
+            bukaCustomModal('Berhasil', 'Semua transaksi terpilih berhasil disetujui!', 'success');
             triggerWhatsAppToast('Notifikasi WA Massal: Transaksi terpilih telah disetujui pengurus.');
         }
-        window.approveAllSelected = approveAllSelected;
 
         function renderAnggota() {
             const grid = document.getElementById('gridAnggota');
@@ -1751,13 +1753,13 @@
                         </div>
                         <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
                             <div><span class="text-[10px] text-slate-400 block uppercase">Total Saldo</span><strong class="text-emerald-700 dark:text-emerald-400 text-sm">${formatRupiah(saldoAgt)}</strong></div>
-                            <button onclick="window.bukaModalEditAnggota(${agt.id})" class="p-2 text-slate-400 hover:text-emerald-600 rounded-xl"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg></button>
+                            <button data-id="${agt.id}" class="edit-anggota-btn p-2 text-slate-400 hover:text-emerald-600 rounded-xl"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg></button>
                         </div>
                     </div>
                 `;
             }).join('');
+            attachAnggotaDynamicListeners();
         }
-        window.renderAnggota = renderAnggota;
 
         function bukaModalEditAnggota(id) {
             const agt = appState.anggota.find(a => Number(a.id) === Number(id));
@@ -1774,7 +1776,6 @@
             document.getElementById('modalAnggotaTitle').innerText = "Edit Data Anggota";
             document.getElementById('modalAnggota').classList.remove('hidden');
         }
-        window.bukaModalEditAnggota = bukaModalEditAnggota;
 
         function getBadgesForMember(agtId, saldo) {
             let list = [];
@@ -1833,25 +1834,21 @@
             summary.innerHTML = `Total ZIS Tersalurkan: <strong>${formatRupiah(total)}</strong> (${myZis.length} kali penyaluran)`;
         }
 
-        function bukaModalZis() { document.getElementById('modalZis').classList.remove('hidden'); }
-        window.bukaModalZis = bukaModalZis;
-
         function simpanZis(e) {
             e.preventDefault();
             const jenis = document.getElementById('zisJenis').value;
             const nominal = Number(document.getElementById('zisNominal').value);
             if(!appState.zisRecords) appState.zisRecords = [];
             appState.zisRecords.push({ id: Date.now(), anggotaId: currentUser.id, jenis, nominal, tanggal: new Date().toISOString() });
-            saveStorage();
+            saveCloudState();
             document.getElementById('modalZis').classList.add('hidden');
             renderPortalAnggota();
-            window.bukaCustomModal('Berhasil', 'ZIS berhasil disalurkan. Terima kasih atas kedermawanan Anda!', 'success');
+            bukaCustomModal('Berhasil', 'ZIS berhasil disalurkan. Terima kasih atas kedermawanan Anda!', 'success');
             triggerWhatsAppToast(`Notifikasi WA: Penyaluran ${jenis} sebesar ${formatRupiah(nominal)} berhasil dicatat.`);
         }
-        window.simpanZis = simpanZis;
 
         function renderLebaranVault() {
-            const vault = appState.lebaranVaults[currentUser.id] || { target: 3000000, terkumpul: 0 };
+            const vault = (appState.lebaranVaults && appState.lebaranVaults[currentUser.id]) || { target: 3000000, terkumpul: 0 };
             document.getElementById('lebaranTargetText').innerText = formatRupiah(vault.target);
             document.getElementById('lebaranTerkumpulText').innerText = formatRupiah(vault.terkumpul);
             const pct = Math.min(100, Math.round((vault.terkumpul / vault.target) * 100));
@@ -1864,8 +1861,6 @@
             const votings = appState.votings || [];
             if(votings.length === 0) { container.innerHTML = `<p class="text-xs text-slate-400">Belum ada voting aktif.</p>`; return; }
             container.innerHTML = votings.map(v => {
-                let totalSuara = 0;
-                Object.values(v.suara).forEach(arr => totalSuara += arr.length);
                 return `
                     <div class="bg-slate-50 dark:bg-slate-800 p-3.5 rounded-xl space-y-2">
                         <p class="font-bold text-xs text-slate-800 dark:text-white">${v.topik}</p>
@@ -1876,7 +1871,7 @@
                                 return `
                                     <div class="flex justify-between items-center text-xs bg-white dark:bg-slate-900 p-2 rounded-lg border border-slate-100 dark:border-slate-800">
                                         <span>${op} (${count} suara)</span>
-                                        <button onclick="window.voteOpsi(${v.id}, '${op}')" class="px-2.5 py-1 rounded-lg text-[10px] font-bold ${isVoted ? 'bg-emerald-600 text-white' : 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200'}">${isVoted ? 'Pilihan Anda' : 'Pilih'}</button>
+                                        <button data-voting-id="${v.id}" data-opsi="${op}" class="vote-btn px-2.5 py-1 rounded-lg text-[10px] font-bold ${isVoted ? 'bg-emerald-600 text-white' : 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200'}">${isVoted ? 'Pilihan Anda' : 'Pilih'}</button>
                                     </div>
                                 `;
                             }).join('')}
@@ -1884,21 +1879,21 @@
                     </div>
                 `;
             }).join('');
+            attachVotingDynamicListeners();
         }
 
         function voteOpsi(votingId, opsiName) {
-            const v = appState.votings.find(item => item.id === votingId);
+            const v = appState.votings.find(item => Number(item.id) === Number(votingId));
             if(!v) return;
             Object.keys(v.suara).forEach(op => {
                 v.suara[op] = (v.suara[op] || []).filter(id => Number(id) !== Number(currentUser.id));
             });
             if(!v.suara[opsiName]) v.suara[opsiName] = [];
             v.suara[opsiName].push(currentUser.id);
-            saveStorage();
+            saveCloudState();
             renderVotingList();
-            window.bukaCustomModal('Berhasil', 'Suara Anda berhasil direkam!', 'success');
+            bukaCustomModal('Berhasil', 'Suara Anda berhasil direkam!', 'success');
         }
-        window.voteOpsi = voteOpsi;
 
         function renderPortalChart(agtId) {
             const ctx = document.getElementById('portalChart');
@@ -1930,7 +1925,6 @@
                 options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
             });
         }
-        window.renderPortalChart = renderPortalChart;
 
         function renderPinjamanAngsuranTab() {
             const agtId = currentUser.id;
@@ -1951,10 +1945,11 @@
                         <td class="py-3 px-4 font-semibold text-slate-800 dark:text-white">${agt ? agt.nama : 'Anggota'}</td>
                         <td class="py-3 px-4"><span class="font-bold text-rose-600 block">${formatRupiah(p.sisa)}</span><span class="text-[11px] text-slate-500">Tenor ${p.tenorBulan} bln</span></td>
                         <td class="py-3 px-4 text-center text-xs">${new Date(p.tglJatuhTempo).toLocaleDateString('id-ID')}</td>
-                        <td class="py-3 px-4 text-center"><button onclick="window.bukaModalEditPinjaman(${p.id})" class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold px-3 py-1.5 rounded-lg text-xs">Edit</button></td>
+                        <td class="py-3 px-4 text-center"><button data-id="${p.id}" class="edit-pinjaman-btn bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold px-3 py-1.5 rounded-lg text-xs">Edit</button></td>
                     </tr>
                 `;
             }).join('');
+            attachPinjamanDynamicListeners();
         }
 
         function renderTabelHistoriAngsuran() {
@@ -2038,7 +2033,6 @@
                 `;
             }
         }
-        window.hitungShuData = hitungShuData;
 
         function formatRupiah(val) { return 'Rp ' + Number(val || 0).toLocaleString('id-ID'); }
         function formatWaktuLengkap(dStr) {
@@ -2072,48 +2066,35 @@
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `Laporan_Koperasi_${new Date().toISOString().slice(0,10)}.csv`; a.click();
         }
-        window.exportToExcel = exportToExcel;
 
         function exportToPDF() { window.print(); }
-        window.exportToPDF = exportToPDF;
 
         function bukaModalPinVerifikasi() { document.getElementById('inputVerifPin').value = ''; document.getElementById('modalPinVerifikasi').classList.remove('hidden'); }
-        window.bukaModalPinVerifikasi = bukaModalPinVerifikasi;
-
         function tutupModalPinVerifikasi() { document.getElementById('modalPinVerifikasi').classList.add('hidden'); }
-        window.tutupModalPinVerifikasi = tutupModalPinVerifikasi;
 
         function verifikasiPinProfil(e) {
             e.preventDefault();
-            if(document.getElementById('inputVerifPin').value.trim() !== (currentUser.pin || '123')) { window.bukaCustomModal('PIN Salah', 'PIN salah!', 'danger'); return; }
+            if(document.getElementById('inputVerifPin').value.trim() !== (currentUser.pin || '123')) { bukaCustomModal('PIN Salah', 'PIN salah!', 'danger'); return; }
             tutupModalPinVerifikasi(); switchTab('profil-saya');
         }
-        window.verifikasiPinProfil = verifikasiPinProfil;
 
         function bukaModalLupaPin() { document.getElementById('modalLupaPin').classList.remove('hidden'); }
-        window.bukaModalLupaPin = bukaModalLupaPin;
-
-        function kirimPermintaanResetPin() { window.bukaCustomModal('Terkirim', 'Permintaan reset PIN telah dikirim ke Super Admin.', 'success'); document.getElementById('modalLupaPin').classList.add('hidden'); }
-        window.kirimPermintaanResetPin = kirimPermintaanResetPin;
+        function kirimPermintaanResetPin() { bukaCustomModal('Terkirim', 'Permintaan reset PIN telah dikirim ke Super Admin.', 'success'); document.getElementById('modalLupaPin').classList.add('hidden'); }
 
         function bukaModalLebaran() { document.getElementById('modalLebaran').classList.remove('hidden'); }
-        window.bukaModalLebaran = bukaModalLebaran;
-
         function simpanTabunganLebaran(e) {
             e.preventDefault();
             const target = Number(document.getElementById('lebaranTargetInput').value);
             const setor = Number(document.getElementById('lebaranSetorInput').value);
+            if(!appState.lebaranVaults) appState.lebaranVaults = {};
             if(!appState.lebaranVaults[currentUser.id]) appState.lebaranVaults[currentUser.id] = { target: 3000000, terkumpul: 0 };
             appState.lebaranVaults[currentUser.id].target = target;
             appState.lebaranVaults[currentUser.id].terkumpul += setor;
-            saveStorage(); renderPortalAnggota(); document.getElementById('modalLebaran').classList.add('hidden');
-            window.bukaCustomModal('Berhasil', 'Tabungan Lebaran berhasil disetor!', 'success');
+            saveCloudState(); renderPortalAnggota(); document.getElementById('modalLebaran').classList.add('hidden');
+            bukaCustomModal('Berhasil', 'Tabungan Lebaran berhasil disetor!', 'success');
         }
-        window.simpanTabunganLebaran = simpanTabunganLebaran;
 
         function bukaModalVoting() { document.getElementById('modalVoting').classList.remove('hidden'); }
-        window.bukaModalVoting = bukaModalVoting;
-
         function buatVotingBaru(e) {
             e.preventDefault();
             const topik = document.getElementById('votingTopik').value.trim();
@@ -2121,11 +2102,10 @@
             if(topik && opsi.length > 0) {
                 let suara = {}; opsi.forEach(op => suara[op] = []);
                 appState.votings.push({ id: Date.now(), topik, opsi, suara });
-                saveStorage(); renderPortalAnggota(); document.getElementById('modalVoting').classList.add('hidden');
-                window.bukaCustomModal('Berhasil', 'Voting berhasil dibuat!', 'success');
+                saveCloudState(); renderPortalAnggota(); document.getElementById('modalVoting').classList.add('hidden');
+                bukaCustomModal('Berhasil', 'Voting berhasil dibuat!', 'success');
             }
         }
-        window.buatVotingBaru = buatVotingBaru;
 
         function bukaCustomModal(title, text, type, cb = null) {
             document.getElementById('customModalTitle').innerText = title;
@@ -2134,10 +2114,7 @@
             btn.onclick = cb ? cb : tutupCustomModal;
             document.getElementById('customModal').classList.remove('hidden');
         }
-        window.bukaCustomModal = bukaCustomModal;
-
         function tutupCustomModal() { document.getElementById('customModal').classList.add('hidden'); }
-        window.tutupCustomModal = tutupCustomModal;
 
         function bukaModalTransaksi() {
             const sel = document.getElementById('trxAnggotaId');
@@ -2147,16 +2124,10 @@
             }
             document.getElementById('modalTransaksi').classList.remove('hidden');
         }
-        window.bukaModalTransaksi = bukaModalTransaksi;
-
         function tutupModalTransaksi() { document.getElementById('modalTransaksi').classList.add('hidden'); }
-        window.tutupModalTransaksi = tutupModalTransaksi;
 
         function bukaModalOperasional() { document.getElementById('modalOperasional').classList.remove('hidden'); }
-        window.bukaModalOperasional = bukaModalOperasional;
-
         function tutupModalOperasional() { document.getElementById('modalOperasional').classList.add('hidden'); }
-        window.tutupModalOperasional = tutupModalOperasional;
 
         function simpanOperasional(e) {
             e.preventDefault();
@@ -2165,13 +2136,12 @@
             if(ket && nom > 0) {
                 if(!appState.operasional) appState.operasional = [];
                 appState.operasional.push({ id: Date.now(), tanggal: new Date().toISOString().slice(0,10), keterangan: ket, nominal: nom });
-                saveStorage();
+                saveCloudState();
                 tutupModalOperasional();
                 renderTabelBebanOperasional();
-                window.bukaCustomModal('Berhasil', 'Biaya operasional berhasil dicatat!', 'success');
+                bukaCustomModal('Berhasil', 'Biaya operasional berhasil dicatat!', 'success');
             }
         }
-        window.simpanOperasional = simpanOperasional;
 
         function bukaModalAnggota() {
             document.getElementById('editAnggotaId').value = '';
@@ -2179,10 +2149,7 @@
             document.getElementById('modalAnggotaTitle').innerText = "Tambah Anggota Keluarga";
             document.getElementById('modalAnggota').classList.remove('hidden');
         }
-        window.bukaModalAnggota = bukaModalAnggota;
-
         function tutupModalAnggota() { document.getElementById('modalAnggota').classList.add('hidden'); }
-        window.tutupModalAnggota = tutupModalAnggota;
 
         function simpanAnggota(e) {
             e.preventDefault();
@@ -2205,12 +2172,11 @@
                 const newId = Date.now();
                 appState.anggota.push({ id: newId, nama, peran, role, keluarga, kontak, email, pin, tglGabung, foto: "", bankTujuan: "BCA a.n " + nama });
             }
-            saveStorage();
+            saveCloudState();
             tutupModalAnggota();
             renderAnggota();
-            window.bukaCustomModal('Berhasil', 'Data anggota berhasil disimpan!', 'success');
+            bukaCustomModal('Berhasil', 'Data anggota berhasil disimpan!', 'success');
         }
-        window.simpanAnggota = simpanAnggota;
 
         function bukaModalEditPinjaman(id) {
             const p = appState.pinjaman.find(item => Number(item.id) === Number(id));
@@ -2221,10 +2187,7 @@
             document.getElementById('editPinjamanStatus').value = p.status;
             document.getElementById('modalEditPinjaman').classList.remove('hidden');
         }
-        window.bukaModalEditPinjaman = bukaModalEditPinjaman;
-
         function tutupModalEditPinjaman() { document.getElementById('modalEditPinjaman').classList.add('hidden'); }
-        window.tutupModalEditPinjaman = tutupModalEditPinjaman;
 
         function simpanEditPinjaman(e) {
             e.preventDefault();
@@ -2237,41 +2200,19 @@
                 appState.pinjaman[idx].sisa = sisa;
                 appState.pinjaman[idx].tenorBulan = tenor;
                 appState.pinjaman[idx].status = status;
-                saveStorage();
+                saveCloudState();
                 tutupModalEditPinjaman();
                 renderPinjamanAngsuranTab();
-                window.bukaCustomModal('Berhasil', 'Data pinjaman berhasil diperbarui!', 'success');
+                bukaCustomModal('Berhasil', 'Data pinjaman berhasil diperbarui!', 'success');
             }
         }
-        window.simpanEditPinjaman = simpanEditPinjaman;
 
         function hapusTransaksi(id) {
             appState.transaksi = appState.transaksi.filter(t => Number(t.id) !== Number(id));
-            saveStorage();
+            saveCloudState();
             renderTabelTransaksi();
             renderDashboard();
         }
-        window.hapusTransaksi = hapusTransaksi;
-
-        function generateTagihanWajibBulanIni() {
-            window.bukaCustomModal('Berhasil', 'Tagihan wajib bulan ini berhasil digenerate untuk seluruh anggota!', 'success');
-        }
-        window.generateTagihanWajibBulanIni = generateTagihanWajibBulanIni;
-
-        function updateKategoriOpsi() {}
-        window.updateKategoriOpsi = updateKategoriOpsi;
-
-        function updateKategoriPenjelasan() {}
-        window.updateKategoriPenjelasan = updateKategoriPenjelasan;
-
-        function cekSaldoAnggota() {}
-        window.cekSaldoAnggota = cekSaldoAnggota;
-
-        function ajukanPinjamanDariSimulasi() { window.bukaCustomModal('Berhasil', 'Pengajuan pinjaman berhasil diajukan ke pengurus!', 'success'); }
-        window.ajukanPinjamanDariSimulasi = ajukanPinjamanDariSimulasi;
-
-        function updatePlafonKoperasi() {}
-        window.updatePlafonKoperasi = updatePlafonKoperasi;
 
         function simpanProfilMandiri(e) {
             e.preventDefault();
@@ -2279,29 +2220,10 @@
             currentUser.email = document.getElementById('mandiriEmail').value.trim();
             currentUser.bankTujuan = document.getElementById('mandiriBank').value.trim();
             currentUser.pin = document.getElementById('mandiriPin').value.trim();
-            saveStorage();
-            window.bukaCustomModal('Berhasil', 'Profil & rekening berhasil diperbarui!', 'success');
+            saveCloudState();
+            bukaCustomModal('Berhasil', 'Profil & rekening berhasil diperbarui!', 'success');
             switchTab('portal');
         }
-        window.simpanProfilMandiri = simpanProfilMandiri;
-
-        function bukaModalTransaksiMandiriSetor() { bukaModalTransaksi(); }
-        window.bukaModalTransaksiMandiriSetor = bukaModalTransaksiMandiriSetor;
-
-        function bukaModalTransaksiMandiriTarik() { bukaModalTransaksi(); }
-        window.bukaModalTransaksiMandiriTarik = bukaModalTransaksiMandiriTarik;
-
-        function toggleSelectAll(master) { document.querySelectorAll('.row-approval-checkbox').forEach(cb => cb.checked = master.checked); }
-        window.toggleSelectAll = toggleSelectAll;
-
-        function bukaModalBukti(url) {
-            document.getElementById('imgBuktiPreview').src = url || 'https://placehold.co/400x400/10b981/ffffff?text=Bukti+Transaksi';
-            document.getElementById('modalBukti').classList.remove('hidden');
-        }
-        window.bukaModalBukti = bukaModalBukti;
-
-        function tutupModalBukti() { document.getElementById('modalBukti').classList.add('hidden'); }
-        window.tutupModalBukti = tutupModalBukti;
 
         function simpanTransaksi(e) {
             e.preventDefault();
@@ -2322,39 +2244,142 @@
                 bukti: '',
                 keterangan
             });
-            saveStorage();
+            saveCloudState();
             tutupModalTransaksi();
             renderTabelTransaksi();
             renderDashboard();
-            window.bukaCustomModal('Berhasil', 'Transaksi berhasil dicatat dan menunggu persetujuan bendahara!', 'success');
+            bukaCustomModal('Berhasil', 'Transaksi berhasil dicatat dan menunggu persetujuan bendahara!', 'success');
         }
-        window.simpanTransaksi = simpanTransaksi;
 
         function simpanPengumumanBaru(e) {
             e.preventDefault();
             const txt = document.getElementById('inputPengumumanText').value.trim();
             if(txt) {
                 appState.pengumuman = txt;
-                saveStorage();
+                saveCloudState();
                 document.getElementById('teksPengumuman').innerText = txt;
                 document.getElementById('portalTeksPengumuman').innerText = txt;
                 document.getElementById('modalEditPengumuman').classList.add('hidden');
-                window.bukaCustomModal('Berhasil', 'Pengumuman berhasil diperbarui!', 'success');
+                bukaCustomModal('Berhasil', 'Pengumuman berhasil diperbarui!', 'success');
             }
         }
-        window.simpanPengumumanBaru = simpanPengumumanBaru;
 
         function bukaModalEditPengumuman() {
             document.getElementById('inputPengumumanText').value = appState.pengumuman;
             document.getElementById('modalEditPengumuman').classList.remove('hidden');
         }
-        window.bukaModalEditPengumuman = bukaModalEditPengumuman;
 
-        function tutupModalEditPengumuman() { document.getElementById('modalEditPengumuman').classList.add('hidden'); }
-        window.tutupModalEditPengumuman = tutupModalEditPengumuman;
+        function bukaModalBukti(url) {
+            document.getElementById('imgBuktiPreview').src = url || 'https://placehold.co/400x400/10b981/ffffff?text=Bukti+Transaksi';
+            document.getElementById('modalBukti').classList.remove('hidden');
+        }
 
-        function hitungSimulasiCicilan() {}
-        window.hitungSimulasiCicilan = hitungSimulasiCicilan;
+        function attachTransactionDynamicListeners() {
+            document.querySelectorAll('.view-bukti-btn').forEach(btn => {
+                btn.onclick = () => bukaModalBukti(btn.getAttribute('data-bukti'));
+            });
+            document.querySelectorAll('.del-trx-btn').forEach(btn => {
+                btn.onclick = () => hapusTransaksi(Number(btn.getAttribute('data-id')));
+            });
+        }
+
+        function attachApprovalDynamicListeners() {
+            document.querySelectorAll('.approve-btn').forEach(btn => {
+                btn.onclick = () => approveTransaksi(Number(btn.getAttribute('data-id')), btn.getAttribute('data-approve') === 'true');
+            });
+        }
+
+        function attachAnggotaDynamicListeners() {
+            document.querySelectorAll('.edit-anggota-btn').forEach(btn => {
+                btn.onclick = () => bukaModalEditAnggota(Number(btn.getAttribute('data-id')));
+            });
+        }
+
+        function attachVotingDynamicListeners() {
+            document.querySelectorAll('.vote-btn').forEach(btn => {
+                btn.onclick = () => voteOpsi(Number(btn.getAttribute('data-voting-id')), btn.getAttribute('data-opsi'));
+            });
+        }
+
+        function attachPinjamanDynamicListeners() {
+            document.querySelectorAll('.edit-pinjaman-btn').forEach(btn => {
+                btn.onclick = () => bukaModalEditPinjaman(Number(btn.getAttribute('data-id')));
+            });
+        }
+
+        function attachNavListeners() {
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.onclick = () => {
+                    const tab = btn.getAttribute('data-tab');
+                    const act = btn.getAttribute('data-action');
+                    if(tab) switchTab(tab);
+                    if(act === 'open-pin-verif') bukaModalPinVerifikasi();
+                };
+            });
+        }
+
+        function attachEventListeners() {
+            document.getElementById('loginForm').onsubmit = handleLogin;
+            document.getElementById('logoutBtn').onclick = handleLogout;
+            document.getElementById('toggleSidebarBtn').onclick = toggleSidebar;
+            document.getElementById('sidebarOverlay').onclick = toggleSidebar;
+            document.getElementById('toggleDarkModeBtn').onclick = toggleDarkMode;
+            document.getElementById('modeAdminBtn').onclick = () => switchMode('admin');
+            document.getElementById('modeMemberBtn').onclick = () => switchMode('member');
+            document.getElementById('openTrxModalDashboard').onclick = bukaModalTransaksi;
+            document.getElementById('bukaModalEditPengumumanBtn').onclick = bukaModalEditPengumuman;
+            document.getElementById('gotoSimpananTabBtn').onclick = () => switchTab('simpanan');
+            document.getElementById('approveAllSelectedBtn').onclick = approveAllSelected;
+            document.getElementById('selectAllCheckbox').onchange = (e) => {
+                document.querySelectorAll('.row-approval-checkbox').forEach(cb => cb.checked = e.target.checked);
+            };
+            document.getElementById('exportExcelBtn').onclick = exportToExcel;
+            document.getElementById('exportPdfBtn').onclick = exportToPDF;
+            document.getElementById('openTrxModalSimpananBtn').onclick = bukaModalTransaksi;
+            document.getElementById('generateTagihanBtn').onclick = () => bukaCustomModal('Berhasil', 'Tagihan wajib bulan ini berhasil digenerate!', 'success');
+            document.getElementById('openOpModalBtn').onclick = bukaModalOperasional;
+            document.getElementById('searchInput').oninput = renderTabelTransaksi;
+            document.getElementById('filterTipe').onchange = renderTabelTransaksi;
+            document.getElementById('filterBulan').onchange = renderTabelTransaksi;
+            document.getElementById('filterLimit').onchange = renderTabelTransaksi;
+            document.getElementById('btnAjukanSimPinjaman').onclick = () => bukaCustomModal('Berhasil', 'Pengajuan pinjaman berhasil diajukan!', 'success');
+            document.getElementById('openAnggotaModalBtn').onclick = bukaModalAnggota;
+            document.getElementById('searchAnggotaInput').oninput = renderAnggota;
+            document.getElementById('openLebaranModalBtn').onclick = bukaModalLebaran;
+            document.getElementById('openVotingModalBtn').onclick = bukaModalVoting;
+            document.getElementById('openZisModalBtn').onclick = () => document.getElementById('modalZis').classList.remove('hidden');
+            document.getElementById('openSetorModalBtn').onclick = bukaModalTransaksi;
+            document.getElementById('openTarikModalBtn').onclick = bukaModalTransaksi;
+            document.getElementById('openProfilTabBtn').onclick = bukaModalPinVerifikasi;
+            document.getElementById('mandiriProfilForm').onsubmit = simpanProfilMandiri;
+            document.getElementById('backToPortalBtn').onclick = () => switchTab('portal');
+            document.getElementById('closeWaToastBtn').onclick = tutupWaToast;
+            document.getElementById('verifPinForm').onsubmit = verifikasiPinProfil;
+            document.getElementById('closeVerifPinBtn').onclick = tutupModalPinVerifikasi;
+            document.getElementById('bukaModalLupaPinBtn').onclick = bukaModalLupaPin;
+            document.getElementById('closeLupaPinBtn').onclick = () => document.getElementById('modalLupaPin').classList.add('hidden');
+            document.getElementById('kirimResetPinBtn').onclick = kirimPermintaanResetPin;
+            document.getElementById('lebaranForm').onsubmit = simpanTabunganLebaran;
+            document.getElementById('closeLebaranBtn').onclick = () => document.getElementById('modalLebaran').classList.add('hidden');
+            document.getElementById('votingForm').onsubmit = buatVotingBaru;
+            document.getElementById('closeVotingBtn').onclick = () => document.getElementById('modalVoting').classList.add('hidden');
+            document.getElementById('zisForm').onsubmit = simpanZis;
+            document.getElementById('closeZisBtn').onclick = () => document.getElementById('modalZis').classList.add('hidden');
+            document.getElementById('pengumumanForm').onsubmit = simpanPengumumanBaru;
+            document.getElementById('closePengumumanBtn').onclick = () => document.getElementById('modalEditPengumuman').classList.add('hidden');
+            document.getElementById('closeTrxModalBtn').onclick = tutupModalTransaksi;
+            document.getElementById('closeTrxModalBtn2').onclick = tutupModalTransaksi;
+            document.getElementById('formTransaksi').onsubmit = simpanTransaksi;
+            document.getElementById('operasionalForm').onsubmit = simpanOperasional;
+            document.getElementById('closeOpModalBtn').onclick = tutupModalOperasional;
+            document.getElementById('closeAnggotaModalBtn').onclick = tutupModalAnggota;
+            document.getElementById('closeAnggotaModalBtn2').onclick = tutupModalAnggota;
+            document.getElementById('formAnggota').onsubmit = simpanAnggota;
+            document.getElementById('editPinjamanForm').onsubmit = simpanEditPinjaman;
+            document.getElementById('closeEditPinjamanBtn').onclick = tutupModalEditPinjaman;
+            document.getElementById('closeBuktiModalBtn').onclick = () => document.getElementById('modalBukti').classList.add('hidden');
+            document.getElementById('customModalBtnCancel').onclick = tutupCustomModal;
+        }
     </script>
 </body>
 </html>
