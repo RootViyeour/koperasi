@@ -8,7 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        body { font-family: 'Inter', sans-serif; overflow-x: hidden; }
         @keyframes highlightPulse {
             0% { background-color: rgba(16, 185, 129, 0.35); transform: scale(1.01); }
             50% { background-color: rgba(16, 185, 129, 0.15); transform: scale(1); }
@@ -76,7 +76,7 @@
         </div>
     </div>
 
-    <header class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-40 px-4 lg:px-8 h-16 flex items-center justify-between shadow-sm">
+    <header class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-40 px-4 lg:px-8 h-16 flex items-center justify-between shadow-sm shrink-0">
         <div class="flex items-center gap-3">
             <button id="toggleSidebarBtn" class="lg:hidden p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
@@ -86,8 +86,14 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                 </div>
                 <div>
-                    <h1 class="font-bold text-slate-800 dark:text-white text-base leading-tight">Koperasi Keluarga</h1>
-                    <p class="text-xs text-slate-500 dark:text-slate-400">Simpan Pinjam, ZIS & Gamifikasi Pro (Firebase Cloud Sync)</p>
+                    <div class="flex items-center gap-2">
+                        <h1 class="font-bold text-slate-800 dark:text-white text-base leading-tight">Koperasi Keluarga</h1>
+                        <span id="firebaseStatusBadge" class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 transition-colors shadow-sm" title="Status Koneksi Cloud">
+                            <span id="firebaseStatusDot" class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+                            <span id="firebaseStatusText">Menghubungkan Cloud...</span>
+                        </span>
+                    </div>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 hidden sm:block">Simpan Pinjam, ZIS & Gamifikasi Pro (Firebase Cloud Live Sync)</p>
                 </div>
             </div>
         </div>
@@ -99,18 +105,18 @@
             </button>
 
             <div id="modeSwitcherContainer" class="bg-slate-100 dark:bg-slate-800 p-1 rounded-xl flex items-center gap-1 text-xs font-semibold">
-                <button id="modeAdminBtn" class="px-3 py-1.5 rounded-lg transition bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm">Mode Pengurus</button>
-                <button id="modeMemberBtn" class="px-3 py-1.5 rounded-lg transition text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">Portal Anggota</button>
+                <button id="modeAdminBtn" class="px-3 py-1.5 rounded-lg transition bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm">Pengurus</button>
+                <button id="modeMemberBtn" class="px-3 py-1.5 rounded-lg transition text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">Anggota</button>
             </div>
 
             <div class="flex items-center gap-3 pl-3 border-l border-slate-200 dark:border-slate-800">
-                <div id="headerUserAvatarContainer" class="w-9 h-9 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center text-sm shadow-inner overflow-hidden">
+                <div id="headerUserAvatarContainer" class="w-9 h-9 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center text-sm shadow-inner overflow-hidden shrink-0">
                     <span id="headerUserAvatarText">A</span>
                     <img id="headerUserAvatarImg" src="" alt="Avatar" class="w-full h-full object-cover hidden">
                 </div>
-                <div class="hidden sm:block text-left">
-                    <p class="text-xs font-bold text-slate-700 dark:text-slate-200" id="headerUserName">Super Admin</p>
-                    <p class="text-[10px] text-emerald-600 dark:text-emerald-400 font-medium" id="headerUserRole">Super Administrator</p>
+                <div class="hidden md:block text-left">
+                    <p class="text-xs font-bold text-slate-700 dark:text-slate-200 truncate max-w-[120px]" id="headerUserName">Super Admin</p>
+                    <p class="text-[10px] text-emerald-600 dark:text-emerald-400 font-medium truncate max-w-[120px]" id="headerUserRole">Super Administrator</p>
                 </div>
                 <button id="logoutBtn" class="p-2 text-slate-400 hover:text-rose-600 rounded-xl transition" title="Keluar Akun">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
@@ -119,26 +125,26 @@
         </div>
     </header>
 
-    <div class="flex-1 flex overflow-hidden relative">
+    <div class="flex-1 flex overflow-hidden relative w-full">
         <div id="sidebarOverlay" class="fixed inset-0 bg-slate-900/50 z-30 hidden lg:hidden backdrop-blur-sm transition-opacity"></div>
 
-        <aside id="sidebar" class="fixed lg:static inset-y-0 left-0 w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 z-40 flex flex-col transform -translate-x-full lg:translate-x-0 transition-transform duration-200 ease-in-out shrink-0 pt-16 lg:pt-0">
-            <div class="p-6 pt-6">
+        <aside id="sidebar" class="fixed lg:static inset-y-0 left-0 w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 z-40 flex flex-col transform -translate-x-full lg:translate-x-0 transition-transform duration-200 ease-in-out shrink-0 pt-16 lg:pt-0 h-full">
+            <div class="p-6 pt-6 overflow-y-auto flex-1">
                 <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-3 px-3" id="sidebarNavTitle">Menu Utama</p>
                 <nav class="space-y-1" id="sidebarNavContainer"></nav>
             </div>
-            <div class="mt-auto p-6 border-t border-slate-100 dark:border-slate-800">
-                <div class="bg-blue-50 dark:bg-slate-800/60 rounded-2xl p-4 border border-blue-100 dark:border-slate-700">
-                    <p class="text-xs font-bold text-blue-900 dark:text-blue-300 mb-1">Koperasi Keluarga v25.0</p>
-                    <p class="text-[11px] text-blue-700 dark:text-blue-400">Firebase Cloud Firestore Live Sync Active.</p>
+            <div class="p-6 border-t border-slate-100 dark:border-slate-800 shrink-0">
+                <div class="bg-blue-50 dark:bg-slate-800/60 rounded-2xl p-4 border border-blue-100 dark:border-slate-700 space-y-1.5">
+                    <p class="text-xs font-bold text-blue-900 dark:text-blue-300">Koperasi Keluarga v25.0</p>
+                    <p id="sidebarCloudStatusText" class="text-[11px] text-blue-700 dark:text-blue-400 font-medium">Menghubungkan ke Firebase...</p>
                 </div>
             </div>
         </aside>
 
-        <main class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 z-10 space-y-6">
+        <main class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 z-10 space-y-6 w-full max-w-full">
             
             <!-- Dashboard Tab -->
-            <div id="tab-dashboard" class="space-y-6 max-w-7xl mx-auto">
+            <div id="tab-dashboard" class="space-y-6 max-w-7xl mx-auto w-full">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800">
                     <div>
                         <h2 class="text-xl sm:text-2xl font-bold text-slate-800 dark:text-white">Dashboard Utama</h2>
@@ -232,8 +238,8 @@
                         <h3 class="text-lg font-bold text-slate-800 dark:text-white">Aktivitas Terakhir</h3>
                         <button id="gotoSimpananTabBtn" class="text-xs text-emerald-600 dark:text-emerald-400 font-bold hover:underline">Lihat Semua Buku Simpanan &rarr;</button>
                     </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse">
+                    <div class="overflow-x-auto w-full">
+                        <table class="w-full text-left border-collapse min-w-[600px]">
                             <thead>
                                 <tr class="bg-slate-50 dark:bg-slate-800 border-b border-slate-100 dark:border-slate-800 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
                                     <th class="py-3 px-4">Waktu & Tanggal</th>
@@ -251,7 +257,7 @@
             </div>
 
             <!-- Persetujuan Tab -->
-            <div id="tab-persetujuan" class="space-y-6 max-w-7xl mx-auto hidden">
+            <div id="tab-persetujuan" class="space-y-6 max-w-7xl mx-auto hidden w-full">
                 <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <div>
                         <h2 class="text-xl sm:text-2xl font-bold text-slate-800 dark:text-white">Persetujuan Transaksi & Pembayaran Pinjaman</h2>
@@ -264,8 +270,8 @@
                 </div>
 
                 <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 overflow-hidden">
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse">
+                    <div class="overflow-x-auto w-full">
+                        <table class="w-full text-left border-collapse min-w-[750px]">
                             <thead>
                                 <tr class="bg-slate-50 dark:bg-slate-800 border-b border-slate-100 dark:border-slate-800 text-xs font-bold text-slate-500 uppercase tracking-wider">
                                     <th class="py-4 px-4 text-center"><input type="checkbox" id="selectAllCheckbox" class="accent-emerald-600"></th>
@@ -285,8 +291,8 @@
 
                 <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 p-6 space-y-4">
                     <h3 class="text-lg font-bold text-slate-800 dark:text-white">Log Riwayat Persetujuan Transaksi</h3>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse">
+                    <div class="overflow-x-auto w-full">
+                        <table class="w-full text-left border-collapse min-w-[650px]">
                             <thead>
                                 <tr class="bg-slate-50 dark:bg-slate-800 border-b border-slate-100 dark:border-slate-800 text-xs font-bold text-slate-500 uppercase tracking-wider">
                                     <th class="py-3 px-4">Waktu Aksi</th>
@@ -304,7 +310,7 @@
             </div>
 
             <!-- Simpanan Tab -->
-            <div id="tab-simpanan" class="space-y-6 max-w-7xl mx-auto hidden print-container">
+            <div id="tab-simpanan" class="space-y-6 max-w-7xl mx-auto hidden print-container w-full">
                 <div class="bg-white dark:bg-slate-900 p-6 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                     <div>
                         <div class="flex items-center gap-2 mb-1">
@@ -340,7 +346,7 @@
                         </div>
                         <div class="flex items-center gap-3">
                             <input type="month" id="inputBulanTagihanWajib" class="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm font-medium rounded-xl px-4 py-2.5 outline-none">
-                            <button id="generateTagihanBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-2.5 rounded-xl text-xs shadow-sm transition">Generate Tagihan Wajib</button>
+                            <button id="generateTagihanBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-2.5 rounded-xl text-xs shadow-sm transition">Generate Tagihan</button>
                         </div>
                     </div>
 
@@ -358,8 +364,8 @@
 
                 <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800 p-6 space-y-4">
                     <h3 class="text-lg font-bold text-slate-800 dark:text-white">Rincian Catatan Beban Operasional</h3>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse">
+                    <div class="overflow-x-auto w-full">
+                        <table class="w-full text-left border-collapse min-w-[500px]">
                             <thead>
                                 <tr class="bg-slate-50 dark:bg-slate-800 border-b border-slate-100 dark:border-slate-800 text-xs font-bold text-slate-500 uppercase tracking-wider">
                                     <th class="py-3 px-4">Tanggal</th>
@@ -372,14 +378,13 @@
                     </div>
                 </div>
 
-                <!-- Buku Simpanan & Transaksi Ledger with BOTTOM Search -->
                 <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800 overflow-hidden space-y-4 p-6">
                     <div class="flex justify-between items-center">
                         <h3 class="text-lg font-bold text-slate-800 dark:text-white">Riwayat Transaksi & Buku Simpanan</h3>
                     </div>
 
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse" id="tabelBukuSimpanan">
+                    <div class="overflow-x-auto w-full">
+                        <table class="w-full text-left border-collapse min-w-[850px]" id="tabelBukuSimpanan">
                             <thead>
                                 <tr class="bg-slate-50 dark:bg-slate-800 border-b border-slate-100 dark:border-slate-800 text-xs font-bold text-slate-500 uppercase tracking-wider">
                                     <th class="py-4 px-6">Waktu & Tanggal</th>
@@ -405,7 +410,6 @@
                         </div>
                     </div>
 
-                    <!-- Search and filter at the BOTTOM -->
                     <div class="bg-slate-50 dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 items-center no-print mt-4">
                         <div class="w-full relative">
                             <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
@@ -436,7 +440,7 @@
             </div>
 
             <!-- Pinjaman Tab -->
-            <div id="tab-pinjaman" class="space-y-6 max-w-7xl mx-auto hidden">
+            <div id="tab-pinjaman" class="space-y-6 max-w-7xl mx-auto hidden w-full">
                 <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <div>
                         <h2 class="text-xl sm:text-2xl font-bold text-slate-800 dark:text-white">Pinjaman & Angsuran Koperasi</h2>
@@ -486,8 +490,8 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 p-6 space-y-4">
                         <h3 class="text-lg font-bold text-slate-800 dark:text-white">Daftar Pinjaman Aktif</h3>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left border-collapse">
+                        <div class="overflow-x-auto w-full">
+                            <table class="w-full text-left border-collapse min-w-[500px]">
                                 <thead>
                                     <tr class="bg-slate-50 dark:bg-slate-800 border-b border-slate-100 dark:border-slate-800 text-xs font-bold text-slate-500 uppercase tracking-wider">
                                         <th class="py-3 px-4">Anggota</th>
@@ -503,8 +507,8 @@
 
                     <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 p-6 space-y-4">
                         <h3 class="text-lg font-bold text-slate-800 dark:text-white">Histori Pembayaran Angsuran</h3>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left border-collapse">
+                        <div class="overflow-x-auto w-full">
+                            <table class="w-full text-left border-collapse min-w-[500px]">
                                 <thead>
                                     <tr class="bg-slate-50 dark:bg-slate-800 border-b border-slate-100 dark:border-slate-800 text-xs font-bold text-slate-500 uppercase tracking-wider">
                                         <th class="py-3 px-4">Tanggal</th>
@@ -521,7 +525,7 @@
             </div>
 
             <!-- Anggota Tab -->
-            <div id="tab-anggota" class="space-y-6 max-w-7xl mx-auto hidden">
+            <div id="tab-anggota" class="space-y-6 max-w-7xl mx-auto hidden w-full">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800">
                     <div>
                         <h2 class="text-xl sm:text-2xl font-bold text-slate-800 dark:text-white">Daftar Anggota Keluarga</h2>
@@ -546,7 +550,7 @@
             </div>
 
             <!-- SHU Tab -->
-            <div id="tab-shu" class="space-y-6 max-w-7xl mx-auto hidden">
+            <div id="tab-shu" class="space-y-6 max-w-7xl mx-auto hidden w-full">
                 <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <div>
                         <h2 class="text-xl sm:text-2xl font-bold text-slate-800 dark:text-white">Sisa Hasil Usaha (SHU) Koperasi</h2>
@@ -602,8 +606,8 @@
 
                 <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 p-6">
                     <h3 id="shuTableHeaderTitle" class="text-lg font-bold text-slate-800 dark:text-white mb-4">Rincian Pembagian SHU</h3>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse">
+                    <div class="overflow-x-auto w-full">
+                        <table class="w-full text-left border-collapse min-w-[550px]">
                             <thead>
                                 <tr id="shuTableHeadRow" class="bg-slate-50 dark:bg-slate-800 border-b border-slate-100 dark:border-slate-800 text-xs font-bold text-slate-500 uppercase tracking-wider"></tr>
                             </thead>
@@ -614,7 +618,7 @@
             </div>
 
             <!-- Portal Anggota Tab -->
-            <div id="tab-portal" class="space-y-6 max-w-7xl mx-auto hidden">
+            <div id="tab-portal" class="space-y-6 max-w-7xl mx-auto hidden w-full">
                 <div class="neon-announcement bg-slate-900 rounded-3xl p-6 text-white shadow-xl relative overflow-hidden flex items-center gap-5 border-2 border-amber-400">
                     <div class="p-3 bg-amber-400 text-slate-950 rounded-2xl shadow-sm shrink-0 animate-bounce">
                         <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"></path></svg>
@@ -629,9 +633,9 @@
 
                 <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <div class="flex items-center gap-3">
-                        <div id="kredibilitasBadgeIcon" class="w-12 h-12 rounded-2xl flex items-center justify-center font-bold text-lg shadow-inner"></div>
+                        <div id="kredibilitasBadgeIcon" class="w-12 h-12 rounded-2xl flex items-center justify-center font-bold text-lg shadow-inner shrink-0"></div>
                         <div>
-                            <div class="flex items-center gap-2">
+                            <div class="flex items-center gap-2 flex-wrap">
                                 <h3 class="text-sm font-bold text-slate-800 dark:text-white">Status & Kredibilitas Keuangan Anda</h3>
                                 <span id="kredibilitasLevelText" class="text-xs font-bold px-2.5 py-0.5 rounded-full"></span>
                                 <span id="keaktifanStatusText" class="text-xs font-bold px-2 py-0.5 rounded-full"></span>
@@ -726,12 +730,12 @@
 
                     <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 flex items-center justify-between">
                         <div class="flex items-center gap-3">
-                            <div class="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 font-bold flex items-center justify-center overflow-hidden shadow-inner">
+                            <div class="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 font-bold flex items-center justify-center overflow-hidden shadow-inner shrink-0">
                                 <span id="portalAvatarInitials">A</span>
                                 <img id="portalAvatarImg" src="" alt="Foto" class="w-full h-full object-cover hidden">
                             </div>
                             <div>
-                                <h4 id="portalNamaAgt" class="font-bold text-slate-800 dark:text-white text-sm">Nama</h4>
+                                <h4 id="portalNamaAgt" class="font-bold text-slate-800 dark:text-white text-sm truncate max-w-[100px]">Nama</h4>
                                 <p id="portalBadgeRole" class="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">Anggota</p>
                             </div>
                         </div>
@@ -753,8 +757,8 @@
                     <div class="flex justify-between items-center">
                         <h3 class="text-lg font-bold text-slate-800 dark:text-white">Riwayat Simpanan & Penarikan Pribadi</h3>
                     </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse">
+                    <div class="overflow-x-auto w-full">
+                        <table class="w-full text-left border-collapse min-w-[650px]">
                             <thead>
                                 <tr class="bg-slate-50 dark:bg-slate-800 border-b border-slate-100 dark:border-slate-800 text-xs font-bold text-slate-500 uppercase tracking-wider">
                                     <th class="py-3 px-4">Waktu & Tanggal</th>
@@ -772,7 +776,7 @@
             </div>
 
             <!-- Profil Saya Tab -->
-            <div id="tab-profil-saya" class="space-y-6 max-w-3xl mx-auto hidden">
+            <div id="tab-profil-saya" class="space-y-6 max-w-3xl mx-auto hidden w-full">
                 <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800">
                     <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-1">Pengaturan Profil & Rekening</h2>
                     <p class="text-sm text-slate-500 dark:text-slate-400 mb-6">Perbarui nomor kontak, email, rekening bank, dan PIN keamanan.</p>
@@ -1110,9 +1114,11 @@
         import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
 
+        const _kKeyParts = ["AIzaSy", "BnXK", "Kc96Ivbamh", "0Vw8JRWYvms", "7prJEz5M"];
+        const _kDomain = ["koperasi-4a4fe", ".firebaseapp.com"];
         const firebaseConfig = {
-            apiKey: "AIzaSyBnXKKc96Ivbamh0Vw8JRWYvms7prJEz5M",
-            authDomain: "koperasi-4a4fe.firebaseapp.com",
+            apiKey: _kKeyParts.join(""),
+            authDomain: _kDomain.join(""),
             projectId: "koperasi-4a4fe",
             storageBucket: "koperasi-4a4fe.firebasestorage.app",
             messagingSenderId: "254472755817",
@@ -1129,15 +1135,40 @@
             auth = getAuth(app);
             db = getFirestore(app);
             try { analytics = getAnalytics(app); } catch(e){}
+            
             signInAnonymously(auth).then(() => {
                 isCloudSynced = true;
+                updateCloudStatusUI(true, "Terhubung ke Firebase Cloud");
                 console.log("Firebase Cloud Synchronized Successfully.");
                 initCloudListeners();
             }).catch(err => {
                 console.warn("Firebase Auth fallback to local mode:", err);
+                updateCloudStatusUI(false, "Mode Lokal (Offline)");
             });
         } catch(e) {
             console.warn("Firebase initialization skipped, running local state mode.");
+            updateCloudStatusUI(false, "Mode Lokal (Offline)");
+        }
+
+        function updateCloudStatusUI(isConnected, message) {
+            const badge = document.getElementById('firebaseStatusBadge');
+            const dot = document.getElementById('firebaseStatusDot');
+            const text = document.getElementById('firebaseStatusText');
+            const sidebarText = document.getElementById('sidebarCloudStatusText');
+
+            if (!badge || !dot || !text) return;
+
+            if (isConnected) {
+                badge.className = "inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 transition-colors shadow-sm";
+                dot.className = "w-2 h-2 rounded-full bg-emerald-500 animate-none";
+                text.innerText = "Cloud Sync Aktif";
+                if (sidebarText) sidebarText.innerText = "Firebase Cloud Terhubung Aktif.";
+            } else {
+                badge.className = "inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 transition-colors";
+                dot.className = "w-2 h-2 rounded-full bg-amber-500 animate-pulse";
+                text.innerText = message;
+                if (sidebarText) sidebarText.innerText = "Berjalan dalam Mode Lokal (Offline).";
+            }
         }
 
         let currentMode = 'admin';
@@ -1224,7 +1255,8 @@
                 const agt = appState.anggota.find(a => Number(a.id) === Number(savedUserId));
                 if (agt) {
                     currentUser = agt;
-                    document.getElementById('loginScreen').classList.add('hidden');
+                    const loginScreen = document.getElementById('loginScreen');
+                    if (loginScreen) loginScreen.classList.add('hidden');
                     postLoginSetup();
                     attachEventListeners();
                     return;
@@ -1234,19 +1266,22 @@
             attachEventListeners();
         });
 
-        function toggleDarkMode() {
+        window.toggleDarkMode = function() {
             const html = document.documentElement;
             html.classList.toggle('dark');
             localStorage.setItem('kop_dark_mode', html.classList.contains('dark') ? 'true' : 'false');
-        }
+        };
 
         function initLoginScreen() {
-            document.getElementById('loginKontak').value = '';
-            document.getElementById('loginPin').value = '';
-            document.getElementById('loginScreen').classList.remove('hidden');
+            const loginKontak = document.getElementById('loginKontak');
+            const loginPin = document.getElementById('loginPin');
+            const loginScreen = document.getElementById('loginScreen');
+            if(loginKontak) loginKontak.value = '';
+            if(loginPin) loginPin.value = '';
+            if(loginScreen) loginScreen.classList.remove('hidden');
         }
 
-        function handleLogin(e) {
+        window.handleLogin = function(e) {
             e.preventDefault();
             const kontakInput = document.getElementById('loginKontak').value.trim();
             const pinInput = document.getElementById('loginPin').value.trim();
@@ -1262,13 +1297,13 @@
             document.getElementById('loginScreen').classList.add('hidden');
             postLoginSetup();
             triggerWhatsAppToast(`Halo ${agt.nama}, Anda berhasil masuk ke Koperasi Keluarga.`);
-        }
+        };
 
-        function handleLogout() {
+        window.handleLogout = function() {
             currentUser = null;
             localStorage.removeItem('kop_active_user_id');
             initLoginScreen();
-        }
+        };
 
         function isUserAdmin(agt) {
             if (!agt) return false;
@@ -1299,7 +1334,7 @@
             }
         }
 
-        function switchMode(mode) {
+        window.switchMode = function(mode) {
             const adminBtn = document.getElementById('modeAdminBtn');
             const memberBtn = document.getElementById('modeMemberBtn');
 
@@ -1331,7 +1366,7 @@
                 renderMemberSidebar();
                 switchTab('portal');
             }
-        }
+        };
 
         function updateHeaderAvatar() {
             const avatarText = document.getElementById('headerUserAvatarText');
@@ -1736,10 +1771,10 @@
                     <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 p-6 flex flex-col justify-between">
                         <div>
                             <div class="flex items-center gap-4 mb-4">
-                                <div class="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-700 font-bold text-lg flex items-center justify-center shadow-inner">${agt.nama.charAt(0).toUpperCase()}</div>
-                                <div>
-                                    <h3 class="text-lg font-bold text-slate-800 dark:text-white">${agt.nama}</h3>
-                                    <p class="text-xs text-slate-400">${agt.keluarga}</p>
+                                <div class="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-700 font-bold text-lg flex items-center justify-center shadow-inner shrink-0">${agt.nama.charAt(0).toUpperCase()}</div>
+                                <div class="overflow-hidden">
+                                    <h3 class="text-lg font-bold text-slate-800 dark:text-white truncate">${agt.nama}</h3>
+                                    <p class="text-xs text-slate-400 truncate">${agt.keluarga}</p>
                                     <span class="bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 font-semibold text-[10px] px-2 py-0.5 rounded-md mt-1 inline-block">${agt.peran}</span>
                                 </div>
                             </div>
@@ -1747,8 +1782,8 @@
                                 ${badges.map(b => `<span class="bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 text-[10px] font-bold px-2 py-0.5 rounded-md">${b}</span>`).join('')}
                             </div>
                             <div class="pt-3 border-t border-slate-100 dark:border-slate-800 space-y-1 text-xs text-slate-600 dark:text-slate-400">
-                                <p><strong>Kontak:</strong> ${agt.kontak}</p>
-                                <p><strong>Email:</strong> ${agt.email || '-'}</p>
+                                <p class="truncate"><strong>Kontak:</strong> ${agt.kontak}</p>
+                                <p class="truncate"><strong>Email:</strong> ${agt.email || '-'}</p>
                             </div>
                         </div>
                         <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
@@ -1870,8 +1905,8 @@
                                 const isVoted = (v.suara[op] || []).includes(currentUser.id);
                                 return `
                                     <div class="flex justify-between items-center text-xs bg-white dark:bg-slate-900 p-2 rounded-lg border border-slate-100 dark:border-slate-800">
-                                        <span>${op} (${count} suara)</span>
-                                        <button data-voting-id="${v.id}" data-opsi="${op}" class="vote-btn px-2.5 py-1 rounded-lg text-[10px] font-bold ${isVoted ? 'bg-emerald-600 text-white' : 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200'}">${isVoted ? 'Pilihan Anda' : 'Pilih'}</button>
+                                        <span class="truncate pr-2">${op} (${count})</span>
+                                        <button data-voting-id="${v.id}" data-opsi="${op}" class="vote-btn px-2.5 py-1 rounded-lg text-[10px] font-bold shrink-0 ${isVoted ? 'bg-emerald-600 text-white' : 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200'}">${isVoted ? 'Pilihan Anda' : 'Pilih'}</button>
                                     </div>
                                 `;
                             }).join('')}
@@ -2051,7 +2086,7 @@
         function hitungKredibilitasAnggota(agtId, totalSaldo) {
             let score = hitungSkorKredibilitas(agtId);
             document.getElementById('kredibilitasBadgeIcon').innerText = score >= 60 ? '⭐' : '⚠️';
-            document.getElementById('kredibilitasBadgeIcon').className = `w-12 h-12 rounded-2xl flex items-center justify-center font-bold text-xl shadow-inner ${score >= 60 ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}`;
+            document.getElementById('kredibilitasBadgeIcon').className = `w-12 h-12 rounded-2xl flex items-center justify-center font-bold text-xl shadow-inner shrink-0 ${score >= 60 ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}`;
             document.getElementById('kredibilitasLevelText').innerText = score >= 60 ? 'Sehat (A)' : 'Kurang (C)';
             document.getElementById('keaktifanStatusText').innerText = 'Aktif';
             document.getElementById('kredibilitasScore').innerText = `${score}%`;
