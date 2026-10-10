@@ -40,6 +40,7 @@
 </head>
 <body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 antialiased min-h-screen flex flex-col transition-colors duration-200">
 
+    <!-- Login Screen -->
     <div id="loginScreen" class="fixed inset-0 bg-slate-900/80 z-50 flex items-center justify-center p-4 backdrop-blur-md">
         <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-800 w-full max-w-md p-6 sm:p-8 overflow-hidden relative max-h-[95vh] overflow-y-auto">
             <div class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-emerald-500 to-teal-500"></div>
@@ -49,7 +50,7 @@
                     <svg class="w-8 h-8 sm:w-10 sm:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                 </div>
                 <h1 class="text-xl sm:text-2xl font-extrabold text-slate-800 dark:text-white">Koperasi Keluarga</h1>
-                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Sistem Keuangan, Simpan Pinjam, ZIS & SHU Keluarga v25.0 Pro</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Sistem Keuangan, Tabungan, Simpan Pinjam, ZIS & SHU v25.0</p>
             </div>
 
             <form id="loginForm" class="space-y-4" onsubmit="window.handleLogin(event)">
@@ -80,6 +81,7 @@
         </div>
     </div>
 
+    <!-- Header -->
     <header class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-40 px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between shadow-sm shrink-0 w-full">
         <div class="flex items-center gap-2 sm:gap-3">
             <button onclick="window.toggleSidebar()" class="lg:hidden p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition">
@@ -128,9 +130,11 @@
         </div>
     </header>
 
+    <!-- App Body Layout -->
     <div class="flex-1 flex overflow-hidden relative w-full h-[calc(100vh-4rem)]">
         <div id="sidebarOverlay" onclick="window.toggleSidebar()" class="fixed inset-0 bg-slate-900/50 z-30 hidden lg:hidden backdrop-blur-sm transition-opacity"></div>
 
+        <!-- Sidebar Navigation -->
         <aside id="sidebar" class="fixed lg:static inset-y-0 left-0 w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 z-40 flex flex-col transform -translate-x-full lg:translate-x-0 transition-transform duration-200 ease-in-out shrink-0 h-full">
             <div class="p-4 sm:p-6 pt-6 overflow-y-auto flex-1">
                 <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-3 px-3" id="sidebarNavTitle">Menu Utama</p>
@@ -144,15 +148,16 @@
             </div>
         </aside>
 
+        <!-- Main Content Area -->
         <main class="flex-1 overflow-y-auto p-3 sm:p-6 lg:p-8 z-10 space-y-6 w-full max-w-full flex flex-col justify-between">
             <div class="space-y-6 w-full max-w-7xl mx-auto">
                 
-                <!-- Dashboard Tab with Embedded Voting -->
+                <!-- Dashboard Tab (Includes Embedded Family Voting) -->
                 <div id="tab-dashboard" class="space-y-6 w-full">
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white dark:bg-slate-900 p-5 sm:p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800">
                         <div>
                             <h2 class="text-lg sm:text-2xl font-bold text-slate-800 dark:text-white">Dashboard Utama</h2>
-                            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Ringkasan keuangan keluarga, arus kas, dan voting keluarga secara real-time.</p>
+                            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Ringkasan keuangan keluarga, arus kas, tabungan pribadi, dan voting keluarga.</p>
                         </div>
                         <button onclick="window.bukaModalTransaksi()" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-4 sm:px-5 py-2.5 rounded-xl shadow-md transition flex items-center justify-center gap-2 text-xs sm:text-sm">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
@@ -160,10 +165,11 @@
                         </button>
                     </div>
 
+                    <!-- Announcement Banner -->
                     <div class="neon-announcement bg-slate-900 rounded-3xl p-5 sm:p-8 text-white shadow-2xl relative overflow-hidden flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 border-2 border-amber-400">
                         <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
                         <div class="flex items-start gap-4 sm:gap-5 relative z-10">
-                            <div class="p-3 sm:p-4 bg-amber-400/20 backdrop-blur-md rounded-2xl text-amber-300 shadow-inner shrink-0 border border-amber-400/30 animate-pulse">
+                            <div class="p-3 sm:p-4 bg-amber-400/25 backdrop-blur-md rounded-2xl text-amber-300 shadow-inner shrink-0 border border-amber-400/30 animate-pulse">
                                 <svg class="w-6 h-6 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"></path></svg>
                             </div>
                             <div>
@@ -179,6 +185,7 @@
                         </button>
                     </div>
 
+                    <!-- Stat Cards -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                         <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 flex items-center gap-4">
                             <div class="p-3 sm:p-4 bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 rounded-2xl shadow-inner shrink-0">
@@ -221,6 +228,7 @@
                         </div>
                     </div>
 
+                    <!-- Charts Grid -->
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 p-5 w-full overflow-hidden">
                             <div class="flex justify-between items-center mb-4">
@@ -237,7 +245,7 @@
                         </div>
                     </div>
 
-                    <!-- Family Voting Section Inside Dashboard -->
+                    <!-- Embedded Family Voting Section Inside Dashboard -->
                     <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 p-5 sm:p-6 space-y-4">
                         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
                             <div>
@@ -249,6 +257,7 @@
                         <div id="gridVoting" class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2"></div>
                     </div>
 
+                    <!-- Recent Transactions -->
                     <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 p-5 sm:p-6">
                         <div class="flex justify-between items-center mb-4">
                             <h3 class="text-base sm:text-lg font-bold text-slate-800 dark:text-white">Aktivitas Terakhir</h3>
@@ -267,6 +276,51 @@
                                     </tr>
                                 </thead>
                                 <tbody id="recentTransaksiBody" class="divide-y divide-slate-100 dark:divide-slate-800 text-sm text-slate-700 dark:text-slate-300"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabungan & Kas Pribadi Tab -->
+                <div id="tab-tabungan" class="space-y-6 w-full hidden">
+                    <div class="bg-white dark:bg-slate-900 p-5 sm:p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                        <div>
+                            <h2 class="text-lg sm:text-2xl font-bold text-slate-800 dark:text-white">Tabungan & Kas Pribadi Anggota</h2>
+                            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Pantau rincian saldo simpanan pokok, wajib, sukarela, dan catatan kas pribadi anggota.</p>
+                        </div>
+                        <button onclick="window.bukaModalTransaksi()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-2.5 rounded-xl text-xs shadow-md transition">+ Setor Tabungan</button>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border shadow-sm">
+                            <span class="text-xs text-slate-400 block mb-1 font-semibold uppercase">Total Tabungan Anda</span>
+                            <strong id="tabunganSaldoPribadi" class="text-xl sm:text-2xl font-black text-emerald-600">Rp 0</strong>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border shadow-sm">
+                            <span class="text-xs text-slate-400 block mb-1 font-semibold uppercase">Simpanan Wajib Terkumpul</span>
+                            <strong id="tabunganSimpananWajib" class="text-xl sm:text-2xl font-black text-blue-600">Rp 0</strong>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border shadow-sm">
+                            <span class="text-xs text-slate-400 block mb-1 font-semibold uppercase">Simpanan Sukarela</span>
+                            <strong id="tabunganSimpananSukarela" class="text-xl sm:text-2xl font-black text-purple-600">Rp 0</strong>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 p-5 sm:p-6">
+                        <h3 class="text-base font-bold text-slate-800 dark:text-white mb-4">Riwayat Tabungan & Kas Pribadi</h3>
+                        <div class="overflow-x-auto w-full">
+                            <table class="w-full text-left border-collapse min-w-[700px]">
+                                <thead>
+                                    <tr class="bg-slate-50 dark:bg-slate-800 border-b text-xs font-bold text-slate-500 uppercase">
+                                        <th class="py-3 px-4">Tanggal</th>
+                                        <th class="py-3 px-4">Anggota</th>
+                                        <th class="py-3 px-4">Kategori</th>
+                                        <th class="py-3 px-4">Nominal</th>
+                                        <th class="py-3 px-4">Status</th>
+                                        <th class="py-3 px-4">Keterangan</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabelTabunganBody" class="divide-y text-sm"></tbody>
                             </table>
                         </div>
                     </div>
@@ -438,7 +492,7 @@
                         </div>
                         <div id="adminShuControl" class="flex flex-wrap items-center gap-2 sm:gap-3 hidden w-full sm:w-auto">
                             <label class="text-[11px] font-bold text-slate-500 uppercase">Total SHU</label>
-                            <input type="number" id="inputTotalShu" value="2500000" class="w-28 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold rounded-xl px-2 py-2 outline-none" oninput="hitungShuData()">
+                            <input type="number" id="inputTotalShu" value="2500000" class="w-28 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold rounded-xl px-2 py-2 outline-none" oninput="window.hitungShuData()">
                         </div>
                     </div>
 
@@ -494,7 +548,7 @@
                             <h3 id="portalTotalKasKoperasi" class="text-base sm:text-xl font-bold text-slate-800 dark:text-white mt-0.5">Rp 0</h3>
                         </div>
                         <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800">
-                            <p class="text-xs font-medium text-slate-500">Simpanan Pribadi</p>
+                            <p class="text-xs font-medium text-slate-500">Tabungan Pribadi</p>
                             <h3 id="portalTotalSaldoAgt" class="text-base sm:text-xl font-bold text-emerald-700 dark:text-emerald-400 mt-0.5">Rp 0</h3>
                         </div>
                         <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 flex items-center justify-between">
@@ -534,12 +588,14 @@
 
             </div>
 
+            <!-- Professional Copyright Footer Across All Roles -->
             <footer class="mt-8 py-6 text-center border-t border-slate-200 dark:border-slate-800 text-xs text-slate-400 font-medium no-print w-full">
                 <p>&copy; 2026 aufah tech. All rights reserved.</p>
             </footer>
         </main>
     </div>
 
+    <!-- WhatsApp Toast Notification -->
     <div id="waNotificationToast" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 max-w-sm w-full bg-emerald-900 text-white p-4 rounded-2xl shadow-2xl border border-emerald-700 flex items-start gap-3">
         <div class="w-10 h-10 bg-emerald-500 text-white rounded-xl flex items-center justify-center shrink-0 font-bold text-lg">WA</div>
         <div class="flex-1 overflow-hidden">
@@ -549,6 +605,7 @@
         <button onclick="window.tutupWaToast()" class="text-emerald-400 hover:text-white p-1">✕</button>
     </div>
 
+    <!-- Modals -->
     <!-- Modal Register -->
     <div id="modalRegister" class="fixed inset-0 bg-slate-900/80 z-50 hidden flex items-center justify-center p-4 backdrop-blur-md">
         <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border w-full max-w-md p-6 space-y-4 max-h-[90vh] overflow-y-auto">
@@ -833,6 +890,7 @@
         </div>
     </div>
 
+    <!-- Firebase & App Script -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
@@ -894,7 +952,7 @@
         let currentUser = null;
 
         let appState = {
-            pengumuman: "Selamat datang di Koperasi Keluarga v25.0 Pro! Sistem keuangan, Simpan Pinjam, ZIS dan SHU aktif.",
+            pengumuman: "Selamat datang di Koperasi Keluarga v25.0 Pro! Sistem keuangan, Tabungan & Kas Pribadi, Simpan Pinjam, ZIS dan SHU aktif.",
             pinjamanSettings: { maxPlafon: "3x Total Simpanan", bunga: "1% per Bulan (Flat)", tenor: "12 Bulan (1 Tahun)" },
             shuSettings: { alokasiModal: "40% dari Total SHU", alokasiCadangan: "30% dari Total SHU", alokasiSosial: "30% dari Total SHU" },
             anggota: [
@@ -1103,6 +1161,9 @@
                 <button onclick="window.switchTab('dashboard')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition text-emerald-700 bg-emerald-50 dark:bg-emerald-950/50 dark:text-emerald-300" data-tab="dashboard">
                     <span class="truncate">Beranda & Voting</span>
                 </button>
+                <button onclick="window.switchTab('tabungan')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800" data-tab="tabungan">
+                    <span class="truncate">Tabungan & Kas Pribadi</span>
+                </button>
                 <button onclick="window.switchTab('persetujuan')" class="nav-btn w-full flex items-center justify-between px-4 py-3 rounded-xl font-semibold text-sm transition text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800" data-tab="persetujuan">
                     <span class="truncate">Persetujuan Transaksi</span>
                     ${pendingCount > 0 ? `<span class="bg-amber-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">${pendingCount}</span>` : ''}
@@ -1135,6 +1196,9 @@
                 <button onclick="window.switchTab('portal')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition text-emerald-700 bg-emerald-50 dark:bg-emerald-950/50 dark:text-emerald-300" data-tab="portal">
                     <span class="truncate">Dashboard Pribadi</span>
                 </button>
+                <button onclick="window.switchTab('tabungan')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800" data-tab="tabungan">
+                    <span class="truncate">Tabungan & Kas Pribadi</span>
+                </button>
                 <button onclick="window.switchTab('pinjaman')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800" data-tab="pinjaman">
                     <span class="truncate">Ajukan Pinjaman</span>
                 </button>
@@ -1159,7 +1223,7 @@
         };
 
         window.switchTab = function(tabId) {
-            ['dashboard', 'persetujuan', 'simpanan', 'pinjaman', 'zis', 'gamifikasi', 'anggota', 'shu', 'portal', 'profil-saya'].forEach(t => {
+            ['dashboard', 'tabungan', 'persetujuan', 'simpanan', 'pinjaman', 'zis', 'gamifikasi', 'anggota', 'shu', 'portal', 'profil-saya'].forEach(t => {
                 const el = document.getElementById(`tab-${t}`);
                 if(el) el.classList.add('hidden');
             });
@@ -1181,6 +1245,7 @@
             if(window.innerWidth < 1024) window.toggleSidebar();
 
             if(tabId === 'dashboard') { renderDashboard(); renderVoting(); }
+            else if(tabId === 'tabungan') renderTabunganPribadi();
             else if(tabId === 'persetujuan') renderPersetujuanSetoran();
             else if(tabId === 'simpanan') renderTabelTransaksi();
             else if(tabId === 'pinjaman') renderPinjaman();
@@ -1219,6 +1284,43 @@
             renderKkChart();
             renderRecentTransaksi();
             renderVoting();
+        }
+
+        function renderTabunganPribadi() {
+            const tbody = document.getElementById('tabelTabunganBody');
+            if(!tbody) return;
+            const targetId = isUserAdmin(currentUser) && currentMode === 'admin' ? null : currentUser.id;
+            const list = targetId ? appState.transaksi.filter(t => Number(t.anggotaId) === Number(targetId)) : appState.transaksi;
+
+            let totalPribadi = 0, totalWajib = 0, totalSukarela = 0;
+            appState.transaksi.forEach(t => {
+                if(t.status === 'approved' && (!targetId || Number(t.anggotaId) === Number(targetId))) {
+                    const val = t.tipe === 'setor' ? Number(t.nominal) : -Number(t.nominal);
+                    totalPribadi += val;
+                    if(t.kategori === 'Simpanan Wajib') totalWajib += val;
+                    if(t.kategori === 'Simpanan Sukarela') totalSukarela += val;
+                }
+            });
+
+            document.getElementById('tabunganSaldoPribadi').innerText = formatRupiah(totalPribadi);
+            document.getElementById('tabunganSimpananWajib').innerText = formatRupiah(totalWajib);
+            document.getElementById('tabunganSimpananSukarela').innerText = formatRupiah(totalSukarela);
+
+            if(list.length === 0) { tbody.innerHTML = `<tr><td colspan="6" class="py-6 text-center text-slate-400 text-xs">Belum ada catatan tabungan.</td></tr>`; return; }
+            tbody.innerHTML = list.map(t => {
+                const agt = appState.anggota.find(a => Number(a.id) === Number(t.anggotaId));
+                const isSetor = t.tipe === 'setor';
+                return `
+                    <tr class="hover:bg-slate-50 dark:hover:bg-slate-800">
+                        <td class="py-3 px-4 text-xs text-slate-500">${formatWaktuLengkap(t.tanggal)}</td>
+                        <td class="py-3 px-4 font-semibold text-slate-800 dark:text-white">${agt ? agt.nama : 'Anggota'}</td>
+                        <td class="py-3 px-4 text-slate-600 dark:text-slate-300">${t.kategori}</td>
+                        <td class="py-3 px-4 font-bold ${isSetor ? 'text-emerald-600' : 'text-rose-600'}">${isSetor ? '+' : '-'} ${formatRupiah(t.nominal)}</td>
+                        <td class="py-3 px-4"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${t.status === 'approved' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}">${t.status}</span></td>
+                        <td class="py-3 px-4 text-xs text-slate-500">${t.keterangan || '-'}</td>
+                    </tr>
+                `;
+            }).join('');
         }
 
         function renderKkChart() {
@@ -1570,7 +1672,7 @@
             const adminControl = document.getElementById('adminShuControl');
             if (isUserAdmin(currentUser) && currentMode === 'admin') adminControl.classList.remove('hidden');
             else adminControl.classList.add('hidden');
-            hitungShuData();
+            window.hitungShuData();
         }
 
         window.bukaModalSettingShu = function() {
